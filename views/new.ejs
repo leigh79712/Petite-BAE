@@ -1,0 +1,201 @@
+<% layout('/layout/boilerplate') -%>
+<script>
+  
+  const newSize  = <%- JSON.stringify(size) %>
+</script>
+<script defer src="/javascript/newFrom.js"></script>
+<link rel="stylesheet" href="/css/form.css" />
+
+<h1 class="text-center">Add New Product</h1>
+<div class="col-md-6 offset-md-3">
+  <form id="newProduct" class="form" action="/products" method="post">
+  <div class="mb-3">
+    <label class="form-lable" for="porducts">Products</label>
+    <input form="newProduct" class="form-control" type="text" name="product[products]" />
+  </div>
+  <div class="mb-3">
+    <label class="form-lable" for="price">Price</label>
+    <input id="newProduct" class="form-control" type="number" name="product[price]" />
+  </div>
+  <div class="mb-3">
+    <label class="form-lable" for="images">Images</label>
+    <input form="newProduct" class="form-control" type="text" name="product[images]" />
+  </div>
+  <div class="mb-3">
+    <label class="form-lable" for="size">Size</label>
+    <div class="size">
+
+    
+  
+    <!-- <input
+      form="newProduct"
+      type="checkbox"
+      class="btn-check"
+      value="XS"
+      name="product[size]"
+      id="XS"
+/>
+    <label class="btn btn-outline-secondary" for="XS">XS</label>
+<input
+      form="newProduct"
+      type="checkbox"
+      class="btn-check"
+      value="S"
+      name="product[size]"
+      id="S"
+/>
+    <label class="btn btn-outline-secondary" for="S">S</label>
+    <input
+      form="newProduct"
+      type="checkbox"
+      class="btn-check"
+      value="M"
+      name="product[size]"
+      id="M"
+/>
+    <label class="btn btn-outline-secondary" for="M">M</label> -->
+    
+    <!-- Button trigger modal -->
+      <button type="button" class="btn btn-outline-primary float-end" data-bs-toggle="modal" data-bs-target="#sizeModal">
+        Edit
+      </button>
+
+  </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-lable" for="color">Color</label>
+    <input
+      form="newProduct"
+      type="checkbox"
+      class="btn-check"
+      value="white"
+      name="product[color]"
+      id="white"
+    />
+    <label class="btn btn-outline-secondary" for="white">White</label>
+
+    <input
+      form="newProduct"
+      type="checkbox"
+      class="btn-check"
+      value="black"
+      name="product[color]"
+      id="black"
+    />
+    <label class="btn btn-outline-secondary" for="black">Black</label>
+
+    <input
+      form="newProduct"
+      type="checkbox"
+      class="btn-check"
+      value="pink"
+      name="product[color]"
+      id="pink"
+    />
+    <label class="btn btn-outline-secondary" for="pink">Pink</label>
+
+    <input
+      form="newProduct"
+      type="checkbox"
+      class="btn-check"
+      value="brown"
+      name="product[color]"
+      id="brown"
+    />
+    <label class="btn btn-outline-secondary" for="brown">Brown</label>
+  </div>
+  
+  <div class="mb-3">
+    <label class="form-lable" for="size">Category</label>
+    <select form="newProduct" class="form-select" name="product[category]" id="">
+      <option form="newProduct" value="pants">Pants</option>
+      <option form="newProduct" value="dress">Dress</option>
+      <option form="newProduct" value="tshirt">T-shirt</option>
+      <option form="newProduct" value="accessories">Accessories</option>
+      <option form="newProduct" value="Homewear">Homewear</option>
+    </select>
+  </div>
+  
+  <div class="mb-3">
+    <label class="form-lable" for="description">Description</label>
+    <textarea
+      form="newProduct"
+      class="form-control"
+      name="product[description]"
+      rows="3"
+    ></textarea>
+  </div>
+  <div class="d-grid gap-2 col-md-6 offset-md-3 max-auto">
+    <input
+      form="newProduct"
+      class="btn btn-outline-secondary"
+      type="submit"
+      value="Submit"
+    />
+  </div>
+</div>
+
+</form>
+
+
+<!-- Modal -->
+<div class="modal fade" id="sizeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">Edit Size</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        <% for (let s of size){ %> 
+        <input
+          type="checkbox"
+          class="btn-check"
+          value="<%= s.otherSize %>"
+          name="size"
+          id="<%= s.otherSize %>"
+        />
+        <label class="btn btn-outline-secondary" for="<%= s.otherSize %>"><%= s.otherSize %></label>
+       <% } %> 
+      </div>
+        <form class="otherSize" action="/size" method="POST">
+      <label class="form-lable" for="otherSize">Other</label>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="otherSize" id="otherSize" />
+      </div>
+        <input type="submit" value="Save" class="btn btn-outline-primary" />
+    </form>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="mb-3">
+    <form class="otherColor" action="">
+      <label class="form-lable" for="otherColor">Other</label>
+      <input
+        type="text"
+        class="form-control"
+        name="otherColor"
+        id="otherColor"
+      />
+    </form>
+  </div>
+
+  <div class="mb-3">
+    <form class="otherCategory" action="">
+      <label class="form-lable" for="otherCategory">Other</label>
+      <input
+        type="text"
+        class="form-control"
+        name="otherCategory"
+        id="otherCategory"
+      />
+    </form>
+  </div>

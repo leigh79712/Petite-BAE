@@ -1,0 +1,30 @@
+module.exports.descriptors = [
+  "Forest",
+  "Cartoons",
+  "Redwood",
+  "Bullfrog",
+  "Maple",
+  "Misty",
+  "Red",
+  "Pink",
+  "Ocean",
+  "Sea",
+  "Sky",
+  "Diamond",
+  "Desiny",
+  "Daddy",
+  "Mommy",
+];
+
+module.exports.products = [
+  "Jumper",
+  "Hat",
+  "Pants",
+  "T-shirt",
+  "Shirt",
+  "Jacket",
+  "Dress",
+  "Suit",
+  "Swimsuit",
+  "Shoes",
+];

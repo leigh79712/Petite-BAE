@@ -1,0 +1,85 @@
+<% layout('/layout/boilerplate') -%>
+<link rel="stylesheet" href="/css/form.css" />
+
+<h1 class="text-center">Edit Product</h1>
+<div class="col-md-6 offset-md-3">
+  <form
+    class="form"
+    action="/products/<%= products.id %>?_method=PUT"
+    method="post"
+  >
+    <div class="mb-3">
+      <label class="form-lable" for="porducts">Products</label>
+      <input
+        class="form-control"
+        type="text"
+        name="products"
+        value="<%= products.products %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-lable" for="price">Price</label>
+      <input
+        class="form-control"
+        type="number"
+        name="price"
+        value="<%= products.price %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-lable" for="images">Images</label>
+      <input
+        class="form-control"
+        type="text"
+        name="images"
+        value="<%= products.images %>"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-lable" for="size">Size</label>
+      <% for(let p of products.size){ %>
+      <input
+        type="checkbox"
+        class="btn-check"
+        value="<%= p %>"
+        name="size"
+        id="<%= p %>"
+      />
+      <label class="btn btn-outline-secondary" for="<%= p %>"><%= p %></label>
+      <% } %>
+    </div>
+    <div class="mb-3">
+      <label class="form-lable" for="size">Color</label>
+      <% for(let c of products.color){ %>
+      <input
+        type="checkbox"
+        class="btn-check"
+        value="<%= c %>"
+        name="color"
+        id="<%= c %>"
+      />
+      <label class="btn btn-outline-secondary" for="<%= c %>"><%= c %></label>
+      <% } %>
+    </div>
+    <div class="mb-3">
+      <label class="form-lable" for="size">Category</label>
+      <select class="form-select" name="category" id="">
+        <option value="pants">Pants</option>
+        <option value="dress">Dress</option>
+        <option value="tshirt">T-shirt</option>
+        <option value="accessories">Accessories</option>
+        <option value="Homewear">Homewear</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-lable" for="description">Description</label>
+      <textarea class="form-control" name="description" rows="3">
+<%= products.description %></textarea
+      >
+    </div>
+    <div class="d-grid gap-2 col-md-6 offset-md-3 max-auto">
+      <input class="btn btn-outline-secondary" type="submit" value="Submit" />
+    </div>
+  </form>
+</div>
