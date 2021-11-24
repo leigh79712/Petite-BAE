@@ -54,6 +54,17 @@
       id="M"
 />
     <label class="btn btn-outline-secondary" for="M">M</label> -->
+     <% for (let s of size){ %> 
+        <input
+        form="newProduct"
+          type="checkbox"
+          class="btn-check"
+          value="<%= s.otherSize %>"
+          name="product[size]"
+          id="<%= s.otherSize %>"
+        />
+        <label class="btn btn-outline-secondary" for="<%= s.otherSize %>"><%= String(s.otherSize).toUpperCase() %></label>
+       <% } %> 
     
     <!-- Button trigger modal -->
       <button type="button" class="btn btn-outline-primary float-end" data-bs-toggle="modal" data-bs-target="#sizeModal">
@@ -156,15 +167,15 @@
           name="size"
           id="<%= s.otherSize %>"
         />
-        <label class="btn btn-outline-secondary" for="<%= s.otherSize %>"><%= s.otherSize %></label>
+        <label class="btn btn-outline-secondary" for="<%= s.otherSize %>"><%= String(s.otherSize).toUpperCase() %></label>
        <% } %> 
       </div>
-        <form class="otherSize" action="/size" method="POST">
+        <form class="otherSize" action="/size" method="post">
       <label class="form-lable" for="otherSize">Other</label>
       <div class="mb-3">
-        <input type="text" class="form-control" name="otherSize" id="otherSize" />
+        <input type="text" class="form-control size-input" name="otherSize" id="otherSize" />
       </div>
-        <input type="submit" value="Save" class="btn btn-outline-primary" />
+        <input type="submit" value="Save" class="btn btn-outline-primary btn-addItem" />
     </form>
     
       </div>

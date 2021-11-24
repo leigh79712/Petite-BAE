@@ -5,22 +5,22 @@
 // const sizeContainer = document.querySelector(".size");
 // const editSize = document.querySelector(".editSize");
 
-// let newItem, newLable;
-// const addNewItem = function (newItem, newLable, input, type, container, name) {
+// let newItem, newLabel;
+// const addNewItem = function (newItem, newLabel, input, type, container, name) {
 //   newItem = document.createElement("input");
-//   newLable = document.createElement("lable");
+//   newLabel = document.createElement("label");
 //   newItem.setAttribute("type", type);
 //   newItem.form = "newProduct";
 //   newItem.name = name;
 //   newItem.id = input.value;
 //   newItem.value = input.value;
-//   newLable.setAttribute("for", input.value);
+//   newLabel.setAttribute("for", input.value);
 //   newItem.classList.add("btn-check");
-//   newLable.classList.add("btn", "btn-outline-secondary");
+//   newLabel.classList.add("btn", "btn-outline-secondary");
 //   newItem.textContent = input.value;
-//   newLable.textContent = input.value;
+//   newLabel.textContent = input.value;
 //   container.appendChild(newItem);
-//   container.appendChild(newLable);
+//   container.appendChild(newLabel);
 //   console.log(newItem);
 // };
 
@@ -28,7 +28,7 @@
 //   e.preventDefault();
 //   addNewItem(
 //     "newCheckbox",
-//     "newCheckboxLable",
+//     "newCheckboxLabel",
 //     inputSize,
 //     "checkbox",
 //     sizeContainer,

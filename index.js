@@ -45,7 +45,7 @@ app.get("/products/new", async (req, res) => {
 app.post("/size", async (req, res) => {
   const s = await new Size(req.body);
   s.save();
-  res.redirect("/products/new");
+  res.redirect("back");
 });
 
 const recommendProducts = [];
