@@ -6,6 +6,8 @@ const Size = require("./models/size");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
+const bodyParser = require("body-parser");
+
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
   .then(() => {
@@ -26,13 +28,11 @@ app.use(methodOverride("_method"));
 
 app.get("/products", async (req, res) => {
   const products = await Product.find({});
-  console.log(products);
   res.render("index", { products });
 });
 
 app.post("/products", async (req, res) => {
   const product = await new Product(req.body.product);
-  // console.log(product);
   product.save();
   res.redirect(`/products/${product._id}`);
 });
@@ -42,12 +42,18 @@ app.get("/products/new", async (req, res) => {
   res.render("new", { size });
 });
 
-app.post("/size", async (req, res) => {
+app.post("/products/size", async (req, res) => {
+  console.log(req.body);
   const s = await new Size(req.body);
   s.save();
   res.redirect("back");
 });
 
+app.delete("/products/size/:id", async (req, res) => {
+  const { id } = req.params;
+  await Size.findByIdAndDelete(id);
+  res.location("back");
+});
 const recommendProducts = [];
 const randomProducts = async function (times) {
   const allProducts = await Product.find({});

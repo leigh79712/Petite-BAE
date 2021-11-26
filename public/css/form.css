@@ -4,3 +4,18 @@
 .col-2 {
   position: absolute;
 }
+.close-modal {
+  position: relative;
+  top: -1rem;
+  right: 1rem;
+  font-size: 0.1rem;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  border: lightgray;
+  background: rgb(247, 204, 139);
+  border-radius: 45%;
+}
+
+.deleteform {
+  display: inline;
+}

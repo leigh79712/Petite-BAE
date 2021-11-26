@@ -1,6 +1,5 @@
 <% layout('/layout/boilerplate') -%>
 <script>
-  
   const newSize  = <%- JSON.stringify(size) %>
 </script>
 <script defer src="/javascript/newFrom.js"></script>
@@ -25,35 +24,6 @@
     <label class="form-lable" for="size">Size</label>
     <div class="size">
 
-    
-  
-    <!-- <input
-      form="newProduct"
-      type="checkbox"
-      class="btn-check"
-      value="XS"
-      name="product[size]"
-      id="XS"
-/>
-    <label class="btn btn-outline-secondary" for="XS">XS</label>
-<input
-      form="newProduct"
-      type="checkbox"
-      class="btn-check"
-      value="S"
-      name="product[size]"
-      id="S"
-/>
-    <label class="btn btn-outline-secondary" for="S">S</label>
-    <input
-      form="newProduct"
-      type="checkbox"
-      class="btn-check"
-      value="M"
-      name="product[size]"
-      id="M"
-/>
-    <label class="btn btn-outline-secondary" for="M">M</label> -->
      <% for (let s of size){ %> 
         <input
         form="newProduct"
@@ -158,7 +128,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="mb-3">
+        <div class="mb-3 size">
         <% for (let s of size){ %> 
         <input
           type="checkbox"
@@ -168,14 +138,19 @@
           id="<%= s.otherSize %>"
         />
         <label class="btn btn-outline-secondary" for="<%= s.otherSize %>"><%= String(s.otherSize).toUpperCase() %></label>
+
+        <form class="deleteform" action="/products/size/<%= s._id %>?_method=DELETE" method="post">
+        <button class="close-modal">&times;</button>
+        </form>
+
        <% } %> 
       </div>
-        <form class="otherSize" action="/size" method="post">
-      <label class="form-lable" for="otherSize">Other</label>
-      <div class="mb-3">
-        <input type="text" class="form-control size-input" name="otherSize" id="otherSize" />
-      </div>
-        <input type="submit" value="Save" class="btn btn-outline-primary btn-addItem" />
+        <form id="otherSizeForm" onsubmit="saveData()" action="/products/size" method="post">
+          <label class="form-lable" for="otherSize">Other</label>
+          <div class="mb-3">
+            <input type="text" class="form-control size-input" name="otherSize" id="otherSize" />
+          </div>
+            <button class="btn btn-outline-primary btn-addItem">Save</button>
     </form>
     
       </div>
