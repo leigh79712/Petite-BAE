@@ -52,7 +52,7 @@ app.post("/products/size", async (req, res) => {
 app.delete("/products/size/:id", async (req, res) => {
   const { id } = req.params;
   await Size.findByIdAndDelete(id);
-  res.location("back");
+  // res.location("back");
 });
 const recommendProducts = [];
 const randomProducts = async function (times) {

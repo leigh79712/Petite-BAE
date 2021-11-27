@@ -8,12 +8,12 @@
   position: relative;
   top: -1rem;
   right: 1rem;
-  font-size: 0.1rem;
-  color: rgb(255, 255, 255);
+  font-size: 0.5rem;
+  color: rgb(120, 117, 117);
   cursor: pointer;
-  border: lightgray;
-  background: rgb(247, 204, 139);
-  border-radius: 45%;
+  border: rgb(133, 133, 133) solid 1px;
+  background: rgb(255, 255, 255);
+  border-radius: 50%;
 }
 
 .deleteform {

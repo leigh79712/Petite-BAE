@@ -4,6 +4,7 @@ const sizeContainer = document.querySelectorAll(".size");
 const newProduct = document.querySelector("#newProduct");
 const addItem = document.querySelector(".btn-addItem");
 const sizeInput = document.querySelector(".size-input");
+const deleteForm = document.querySelectorAll(".deleteform");
 
 for (let i = 0; i < newSize.length; i++) {
   // let newCheckbox = String(newSize[i].otherSize).toUpperCase();
@@ -20,8 +21,6 @@ const renderNewItem = () => {
   for (let s of sizeContainer) {
     const newItem = document.createElement("input");
     const newLabel = document.createElement("label");
-    const form = document.createElement("form");
-    const closeButton = document.createElement("button");
 
     newItem.setAttribute("type", "checkbox");
     newItem.setAttribute("form", "newProduct");
@@ -33,23 +32,30 @@ const renderNewItem = () => {
     newLabel.classList.add("btn", "btn-outline-secondary");
     newItem.textContent = el;
     newLabel.textContent = el;
+
+    s.appendChild(newItem);
+    s.appendChild(newLabel);
+  }
+  const appendDeleteBtn = function () {
+    const form = document.createElement("form");
+    const closeButton = document.createElement("button");
     form.classList.add("deleteform");
-    form.setAttribute("action", `/products/size/${s._id}?_method=DELETE`);
+    form.setAttribute("action", `/products/size/?_method=DELETE`);
     form.setAttribute("method", "post");
     closeButton.classList.add("close-modal");
     s.appendChild(form);
     form.append(closeButton);
-    s.appendChild(newItem);
-    s.appendChild(newLabel);
-  }
+  };
+  console.log(newSize);
+
+  sizeInput.value = "";
 };
 
 async function saveData() {
   const formData = new FormData();
   formData.append(otherSize, sizeInput.value);
   let en = {};
-  // for (const entry of formData.entries()) {
-  // }
+
   formData.forEach((el) => {
     en.otherSize = el;
   });
@@ -66,8 +72,23 @@ async function saveData() {
   console.log(body);
 }
 
+const deleteData = (e) => {
+  let response = fetch(`${e.target.action}`, {
+    method: "POST",
+    body: {},
+  });
+  // let body = response.json();
+  console.log(response);
+};
+
 otherSize.addEventListener("submit", function (e) {
   e.preventDefault();
   saveData();
   renderNewItem();
 });
+for (let deleteF of deleteForm) {
+  deleteF.addEventListener("submit", function (e) {
+    deleteData(e);
+    e.preventDefault();
+  });
+}
