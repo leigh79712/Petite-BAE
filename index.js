@@ -6,7 +6,6 @@ const Size = require("./models/size");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
-const bodyParser = require("body-parser");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -24,6 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.engine("ejs", ejsMate);
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride("_method"));
 
 app.get("/products", async (req, res) => {
@@ -44,9 +44,9 @@ app.get("/products/new", async (req, res) => {
 
 app.post("/products/size", async (req, res) => {
   console.log(req.body);
-  const s = await new Size(req.body);
+  let s = await new Size(req.body);
   s.save();
-  res.redirect("back");
+  // res.redirect("back");
 });
 
 app.delete("/products/size/:id", async (req, res) => {

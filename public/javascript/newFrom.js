@@ -38,29 +38,36 @@ const renderNewItem = () => {
     form.setAttribute("method", "post");
     closeButton.classList.add("close-modal");
     s.appendChild(form);
-    form.appendChild(closeButton);
+    form.append(closeButton);
     s.appendChild(newItem);
     s.appendChild(newLabel);
   }
 };
 
-function saveData() {
+async function saveData() {
   const formData = new FormData();
-  formData.append("otherSize", JSON.stringify(sizeInput.value));
+  formData.append(otherSize, sizeInput.value);
+  let en = {};
+  // for (const entry of formData.entries()) {
+  // }
   formData.forEach((el) => {
-    console.log(el);
+    en.otherSize = el;
   });
 
-  const ajax = new XMLHttpRequest();
-  ajax.open("POST", "/products/size", true);
-  formData.append("otherSize", sizeInput.value);
-  ajax.setRequestHeader("Content-type", "application/json; charset=utf-8");
-  ajax.send(formData);
-  console.log(formData);
+  let response = await fetch("/products/size", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+    },
+    body: JSON.stringify(en),
+  });
+  let body = await response.json();
+  console.log(body);
 }
 
-console.log(otherSize);
-addItem.addEventListener("click", function (e) {
-  renderNewItem();
+otherSize.addEventListener("submit", function (e) {
   e.preventDefault();
+  saveData();
+  renderNewItem();
 });
