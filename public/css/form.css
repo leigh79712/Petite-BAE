@@ -19,3 +19,6 @@
 .deleteform {
   display: inline;
 }
+.hidden {
+  display: none;
+}

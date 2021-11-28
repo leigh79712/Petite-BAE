@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const Product = require("./models/products");
 const Size = require("./models/size");
+const Color = require("./models/color");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
@@ -39,7 +40,14 @@ app.post("/products", async (req, res) => {
 
 app.get("/products/new", async (req, res) => {
   const size = await Size.find({});
-  res.render("new", { size });
+  const color = await Color.find({});
+  res.render("new", { size, color });
+});
+
+app.post("/products/color", async (req, res) => {
+  console.log(req.body);
+  let c = await new Color(req.body);
+  c.save();
 });
 
 app.post("/products/size", async (req, res) => {
@@ -49,8 +57,14 @@ app.post("/products/size", async (req, res) => {
   // res.redirect("back");
 });
 
+app.delete("/products/color/:id", async (req, res) => {
+  const { id } = req.params;
+  await Color.findByIdAndDelete(id);
+  // res.location("back");
+});
 app.delete("/products/size/:id", async (req, res) => {
   const { id } = req.params;
+  console.log(id);
   await Size.findByIdAndDelete(id);
   // res.location("back");
 });
