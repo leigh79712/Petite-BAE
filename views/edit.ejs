@@ -1,85 +1,249 @@
 <% layout('/layout/boilerplate') -%>
+<script>
+  const newSize  = <%- JSON.stringify(size) %>
+  const newColor  = <%- JSON.stringify(color) %>
+  const newCategory  = <%- JSON.stringify(category) %>
+
+
+</script>
+<script defer src="/javascript/newFrom.js"></script>
 <link rel="stylesheet" href="/css/form.css" />
 
-<h1 class="text-center">Edit Product</h1>
+<h1 class="text-center">Add New Product</h1>
 <div class="col-md-6 offset-md-3">
-  <form
-    class="form"
-    action="/products/<%= products.id %>?_method=PUT"
-    method="post"
-  >
-    <div class="mb-3">
-      <label class="form-lable" for="porducts">Products</label>
+  <form id="newProduct" class="form" action="/products/<%= products._id %>?_method=PUT" method="post">
+  <div class="mb-3">
+    <label class="form-lable" for="porducts">Products</label>
+    <input form="newProduct" value="<%= products.products %>" class="form-control" type="text" name="products" />
+  </div>
+  <div class="mb-3">
+    <label class="form-lable" for="price">Price</label>
+    <input id="newProduct" value="<%= products.price %>"  class="form-control" type="number" name="price" />
+  </div>
+  <div class="mb-3">
+    <label class="form-lable" for="images">Images</label>
+    <input form="newProduct" value="<%= products.price %>" class="form-control" type="text" name="images" />
+  </div>
+
+  <!-- size -->
+  <div class="mb-3">
+    <label class="form-lable" for="size">Size</label>
+    <div class="size">
+
+     <% for (let s of size){ %> 
+        <input
+        form="newProduct"
+          type="checkbox"
+          class="btn-check"
+          value="<%= s.otherSize %>"
+          name="size"
+          id="<%= s.otherSize + "_s" %>"
+         
+        />
+        <label class="btn btn-outline-secondary" for="<%= s.otherSize + "_s" %>"><%= String(s.otherSize).toUpperCase().slice(1) %></label>
+       <% } %> 
+    
+    <!-- Button trigger modal -->
+      <button type="button" class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#sizeModal">
+        Edit
+      </button>
+
+  </div>
+  </div>
+<!-- color -->
+  <div class="mb-3">
+    <label class="form-lable" for="color">Color</label>
+    <div class="color">
+      <% for (let c of color){ %> 
       <input
-        class="form-control"
-        type="text"
-        name="products"
-        value="<%= products.products %>"
-      />
-    </div>
-    <div class="mb-3">
-      <label class="form-lable" for="price">Price</label>
-      <input
-        class="form-control"
-        type="number"
-        name="price"
-        value="<%= products.price %>"
-      />
-    </div>
-    <div class="mb-3">
-      <label class="form-lable" for="images">Images</label>
-      <input
-        class="form-control"
-        type="text"
-        name="images"
-        value="<%= products.images %>"
-      />
+            form="newProduct"
+            type="checkbox"
+            class="btn-check"
+            value="<%= c.otherColor %>"
+            name="color"
+            id="<%= c.otherColor.replace(" ", "_")+"_c" %>"
+            
+          />
+      <label class="btn btn-outline-secondary" 
+      for="<%= c.otherColor.replace(" ", "_")+"_c" %>">
+      <%= c.otherColor[1].toUpperCase() + c.otherColor.slice(2) %></label>
+      <% } %> 
+    <!-- Button trigger modal -->
+      <button type="button" class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#colorModal">
+        Edit
+      </button>
     </div>
 
-    <div class="mb-3">
-      <label class="form-lable" for="size">Size</label>
-      <% for(let p of products.size){ %>
+   
+  </div>
+ 
+  <div class="mb-3">
+    <label class="form-lable" for="category">Category</label>
+    <div class="category">
+     <% for (let cate of category){ %> 
       <input
-        type="checkbox"
-        class="btn-check"
-        value="<%= p %>"
-        name="size"
-        id="<%= p %>"
-      />
-      <label class="btn btn-outline-secondary" for="<%= p %>"><%= p %></label>
-      <% } %>
+            form="newProduct"
+            type="checkbox"
+            class="btn-check"
+            value="<%= cate.otherCategory %>"
+            name="category"
+            id="<%= cate.otherCategory.replace(" ", "_")+"_c" %>"
+            
+          />
+      <label class="btn btn-outline-secondary" 
+      for="<%= cate.otherCategory.replace(" ", "_")+"_c" %>">
+      <%= cate.otherCategory[1].toUpperCase() + cate.otherCategory.slice(2) %></label>
+      <% } %> 
+      <button class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#categoryModal" type="button">Edit</button>
+
     </div>
-    <div class="mb-3">
-      <label class="form-lable" for="size">Color</label>
-      <% for(let c of products.color){ %>
-      <input
-        type="checkbox"
-        class="btn-check"
-        value="<%= c %>"
-        name="color"
-        id="<%= c %>"
-      />
-      <label class="btn btn-outline-secondary" for="<%= c %>"><%= c %></label>
-      <% } %>
-    </div>
-    <div class="mb-3">
-      <label class="form-lable" for="size">Category</label>
-      <select class="form-select" name="category" id="">
-        <option value="pants">Pants</option>
-        <option value="dress">Dress</option>
-        <option value="tshirt">T-shirt</option>
-        <option value="accessories">Accessories</option>
-        <option value="Homewear">Homewear</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label class="form-lable" for="description">Description</label>
-      <textarea class="form-control" name="description" rows="3">
-<%= products.description %></textarea
-      >
-    </div>
-    <div class="d-grid gap-2 col-md-6 offset-md-3 max-auto">
-      <input class="btn btn-outline-secondary" type="submit" value="Submit" />
-    </div>
-  </form>
+    
+  </div>
+  
+  <div class="mb-3">
+    <label class="form-lable" for="description">Description</label>
+    <textarea
+      form="newProduct"
+      class="form-control"
+      name="description"
+      rows="3"
+    ><%= products.description %>"</textarea>
+  </div>
+  <div class="d-grid gap-2 col-md-6 offset-md-3 max-auto">
+    <input
+      form="newProduct"
+      class="btn btn-outline-secondary"
+      type="submit"
+      value="Submit"
+    />
+  </div>
 </div>
+
+</form>
+
+
+<!-- Modal -->
+<div class="modal fade" id="sizeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">Edit Size</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3 size size-modal">
+        <% for (let s of size){ %> 
+        <input
+          type="checkbox"
+          class="btn-check"
+          value="<%= s.otherSize %>"
+          name="size"
+          id="<%= s.otherSize %>"
+        />
+        <label class="btn btn-outline-secondary" data-label="<%= s.otherSize %>" for="<%= s.otherSize %>"><%= String(s.otherSize).toUpperCase().slice(1) %></label>
+
+        <form class="deleteform" data-name="<%= s.otherSize + "_s" %>" action="/products/size/<%= s._id %>?_method=DELETE" method="post">
+        <button class="close-modal">&times;</button>
+        </form>
+
+       <% } %> 
+      </div>
+        <form id="otherSizeForm"  action="" method="post">
+          <label class="form-lable" for="otherSize">Other</label>
+          <div class="mb-3">
+            <input type="text" class="form-control size-input" name="otherSize" id="otherSize" />
+          </div>
+            <button type="submit" class="btn btn-outline-primary btn-addItem">Save</button>
+    </form>
+    
+   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="colorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">Edit Color</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3 color color-modal">
+        <% for (let c of color){ %> 
+        <input
+          type="checkbox"
+          class="btn-check"
+          value="<%= c.otherColor %>"
+          name="color"
+          id="<%= c.otherColor %>"
+        />
+        <label class="btn btn-outline-secondary" for="<%= c.otherColor.replace(" ", "_") %>"><%= c.otherColor[1].toUpperCase() + c.otherColor.slice(2) %></label>
+
+        <form class="deleteform" data-name="<%= c.otherColor.replace(" ", "_")+"_c" %>" action="/products/color/<%= c._id %>?_method=DELETE" method="post">
+        <button class="close-modal">&times;</button>
+        </form>
+
+       <% } %> 
+      </div>
+        <form id="otherColorForm" action="/products/color" method="post">
+          <label class="form-lable" for="otherColor">Other</label>
+          <div class="mb-3">
+            <input type="text" class="form-control color-input" name="otherColor" id="otherColor" />
+          </div>
+            <button type="submit" class="btn btn-outline-primary btn-addItem">Save</button>
+    </form>
+   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">Edit Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3 category category-modal">
+        <% for (let cate of category){ %> 
+        <input
+          type="checkbox"
+          class="btn-check"
+          value="<%= cate.otherCategory %>"
+          name="category"
+          id="<%= cate.otherCategory %>"
+        />
+        <label class="btn btn-outline-secondary" for="<%= cate.otherCategory.replace(" ", "_") %>"><%= cate.otherCategory[1].toUpperCase() + cate.otherCategory.slice(2) %></label>
+
+        <form class="deleteform" data-name="<%= cate.otherCategory.replace(" ", "_")+"_c" %>" action="/products/category/<%= cate._id %>?_method=DELETE" method="post">
+        <button class="close-modal">&times;</button>
+        </form>
+
+       <% } %> 
+      </div>
+        <form id="otherCategoryForm" action="/products/category" method="post">
+          <label class="form-lable" for="category">Other</label>
+          <div class="mb-3">
+            <input type="text" class="form-control category-input" name="category" id="category" />
+          </div>
+            <button type="submit" class="btn btn-outline-primary btn-addItem">Save</button>
+    </form>
+   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+          

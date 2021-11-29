@@ -1,5 +1,5 @@
 <% layout('/layout/boilerplate') -%>
-
+<link rel="stylesheet" href="/css/show.css" />
 <div class="row mb-3">
   <div class="col-md-6 mb-3">
     <div id="images" class="carousel slide" data-bs-ride="carousel">
@@ -43,12 +43,12 @@
           id="<%= s %>"
         />
         <label class="btn btn-outline-secondary" for="<%= s %>"
-          ><%= s %>
+          ><%= String(s).toUpperCase().slice(1) %>
         </label>
         <%}; %>
       </div>
       <div class="mb-3">
-        <label class="form-lable" for="size">Color</label>
+        <label class="form-lable" for="color">Color</label>
         <% for(let c of products.color) { %>
         <input
           type="radio"
@@ -58,7 +58,7 @@
           id="<%= c %>"
         />
         <label class="btn btn-outline-secondary" for="<%= c %>"
-          ><%= c %>
+          ><%= c.slice(1,2).toUpperCase() + c.slice(2) %>
         </label>
         <%}; %>
       </div>
@@ -88,7 +88,7 @@
 <div class="mb-3">
   <h4 class="text-center">Size</h4>
   <% for(let s of products.size) { %>
-  <p><%= s %></p>
+  <p class="text-center"><%= String(s).toUpperCase().slice(1) %></p>
   <% } %>
 </div>
 <div class="mb-3">

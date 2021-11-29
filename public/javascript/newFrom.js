@@ -1,15 +1,21 @@
 const otherS = [];
 const otherC = [];
+const otherCate = [];
 const otherSize = document.getElementById("otherSizeForm");
 const otherColor = document.getElementById("otherColorForm");
+const otherCategory = document.getElementById("otherCategoryForm");
+
 const sizeContainer = document.querySelectorAll(".size");
 const colorContainer = document.querySelectorAll(".color");
+const categoryContainer = document.querySelectorAll(".category");
+
 const sizeInput = document.querySelector(".size-input");
 const colorInput = document.querySelector(".color-input");
+const categoryInput = document.querySelector(".category-input");
 
-const deleteForm = document.querySelectorAll(".deleteform");
 const sizeModal = document.querySelector(".size-modal");
 const colorModal = document.querySelector(".color-modal");
+const categoryModal = document.querySelector(".category-modal");
 
 for (let i = 0; i < newSize.length; i++) {
   otherS.push(newSize[i].otherSize);
@@ -17,9 +23,13 @@ for (let i = 0; i < newSize.length; i++) {
 for (let s of newColor) {
   otherC.push(s.otherColor);
 }
+for (let cate of newCategory) {
+  otherCate.push(cate.otherCategory);
+}
 
 console.log(otherS);
 console.log(otherC);
+console.log(otherCate);
 
 const renderNewItem = (input, container) => {
   const el = "_" + input.value.toUpperCase();
@@ -68,7 +78,10 @@ const saveData = async (form, input, data, e) => {
     if (e.target.id === "otherSizeForm") en.otherSize = "_" + el;
     if (e.target.id === "otherColorForm")
       en.otherColor = "_" + el.toLowerCase();
+    if (e.target.id === "otherCategoryForm")
+      en.otherCategory = "_" + el.toLowerCase();
   });
+
   await fetch(`/products/${data}`, {
     method: "POST",
     headers: {
@@ -123,6 +136,18 @@ otherColor.addEventListener("submit", function (e) {
 
 colorModal.addEventListener("click", function (e) {
   click(e, colorContainer);
+  deleteItem(clicked);
+  e.preventDefault();
+});
+
+otherCategory.addEventListener("submit", function (e) {
+  e.preventDefault();
+  saveData("otherCategory", categoryInput, "category", e);
+  renderNewItem(categoryInput, categoryContainer);
+});
+
+categoryModal.addEventListener("click", function (e) {
+  click(e, categoryContainer);
   deleteItem(clicked);
   e.preventDefault();
 });

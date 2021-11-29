@@ -3,10 +3,12 @@ const app = express();
 const path = require("path");
 const Product = require("./models/products");
 const Size = require("./models/size");
+const Category = require("./models/category");
 const Color = require("./models/color");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
+const { send } = require("process");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -33,7 +35,8 @@ app.get("/products", async (req, res) => {
 });
 
 app.post("/products", async (req, res) => {
-  const product = await new Product(req.body.product);
+  const product = await new Product(req.body);
+  console.log(req.body);
   product.save();
   res.redirect(`/products/${product._id}`);
 });
@@ -41,7 +44,8 @@ app.post("/products", async (req, res) => {
 app.get("/products/new", async (req, res) => {
   const size = await Size.find({});
   const color = await Color.find({});
-  res.render("new", { size, color });
+  const category = await Category.find({});
+  res.render("new", { size, color, category });
 });
 
 app.post("/products/color", async (req, res) => {
@@ -54,6 +58,12 @@ app.post("/products/size", async (req, res) => {
   console.log(req.body);
   let s = await new Size(req.body);
   s.save();
+  // res.redirect("back");
+});
+app.post("/products/category", async (req, res) => {
+  console.log(req.body);
+  let cate = await new Category(req.body);
+  cate.save();
   // res.redirect("back");
 });
 
@@ -90,14 +100,20 @@ app.delete("/products/:id", async (req, res) => {
 });
 
 app.put("/products/:id", async (req, res) => {
-  const products = await Product.findByIdAndUpdate(req.params.id, req.body);
+  const products = await Product.findByIdAndUpdate(req.params.id, {
+    ...req.body,
+  });
+  console.log(req.body);
   await products.save();
   res.redirect(`/products/${req.params.id}`);
 });
 
 app.get("/products/:id/edit", async (req, res) => {
+  const size = await Size.find({});
+  const color = await Color.find({});
+  const category = await Category.find({});
   const products = await Product.findById(req.params.id);
-  res.render("edit", { products });
+  res.render("edit", { products, size, color, category });
 });
 
 app.listen(3000, () => {
