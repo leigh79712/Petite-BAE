@@ -1,0 +1,20 @@
+<% layout('/layout/boilerplate') -%>
+<link rel="stylesheet" href="/css/form.css" />
+<h1 class="text-center">Add New Product</h1>
+<div class="col-md-6 offset-md-3">
+  <form class="form" action="/products" method="post">
+    <div class="mb-3">
+      <label class="form-lable" for="porducts">Products</label>
+      <input
+        form="newProduct"
+        class="form-control"
+        type="text"
+        name="products"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-lable" for="price">Price</label>
+      <input id="newProduct" class="form-control" type="number" name="price" />
+    </div>
+  </form>
+</div>

@@ -1,3 +1,7 @@
+body {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 100;
+}
 .logo {
   margin: 0 auto;
 }
@@ -9,7 +13,7 @@ ul {
   color: #b08968;
   font-size: 1.5em;
   text-decoration: none;
-  min-height: 3em;
+  height: 2.5em;
   white-space: nowrap;
 }
 
@@ -29,4 +33,10 @@ ul {
   position: absolute;
   right: 9em;
   top: 10px;
+}
+.signup {
+  width: 1.5em;
+  position: absolute;
+  right: 15em;
+  top: 14px;
 }

@@ -31,7 +31,7 @@ app.use(methodOverride("_method"));
 app.get("/products", async (req, res) => {
   const products = await Product.find({});
   const category = await Category.find({});
-  res.render("index", { products, category });
+  res.render("products/index", { products, category });
 });
 
 app.post("/products", async (req, res) => {
@@ -41,11 +41,20 @@ app.post("/products", async (req, res) => {
   res.redirect(`/products/${product._id}`);
 });
 
+app.get("/signup", async (req, res) => {
+  const category = await Category.find({});
+  res.render("user/signup", { category });
+});
+app.get("/login", async (req, res) => {
+  const category = await Category.find({});
+  res.render("user/login", { category });
+});
+
 app.get("/products/new", async (req, res) => {
   const size = await Size.find({});
   const color = await Color.find({});
   const category = await Category.find({});
-  res.render("new", { size, color, category });
+  res.render("products/new", { size, color, category });
 });
 
 app.post("/products/color", async (req, res) => {
@@ -90,7 +99,8 @@ randomProducts(7);
 
 app.get("/products/:id", async (req, res) => {
   const products = await Product.findById(req.params.id);
-  res.render("show", { products, recommendProducts });
+  const category = await Category.find({});
+  res.render("products/show", { products, recommendProducts, category });
 });
 
 app.delete("/products/:id", async (req, res) => {
@@ -103,7 +113,6 @@ app.put("/products/:id", async (req, res) => {
   const products = await Product.findByIdAndUpdate(req.params.id, {
     ...req.body,
   });
-
   await products.save();
   res.redirect(`/products/${req.params.id}`);
 });
@@ -113,7 +122,7 @@ app.get("/products/:id/edit", async (req, res) => {
   const color = await Color.find({});
   const category = await Category.find({});
   const products = await Product.findById(req.params.id);
-  res.render("edit", { products, size, color, category });
+  res.render("products/edit", { products, size, color, category });
 });
 
 app.listen(3000, () => {
