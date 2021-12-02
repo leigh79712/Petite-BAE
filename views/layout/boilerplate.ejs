@@ -13,13 +13,15 @@
     <link
       rel="shortcut icon"
       type="image/png"
-      href="/littletree/baby-crib.png"
+      href="/littletree/logo.png"
     />
     <script defer src="/javascript/script.js"></script>
     <title>Petite BAE</title>
+    
   </head>
-  <body>
-    <%- include("../partial/navbar")%>
+  <body> 
+
+    <%- include("../partial/navbar",{category})%>
     <main class="container mt-5">
         <div class="row">
           <%- include('../partial/sidebar') %>

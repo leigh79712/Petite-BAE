@@ -14,14 +14,18 @@
             <div class="col-6">
               <select class="col-12 form-select mb-1" name="size" id="">
                 <% for(let s of product.size){%>
-                <option value="<%= s %>"><%= s %></option>
+                <option value="<%= s %>">
+                  <%= String(s).toUpperCase().slice(1) %>
+                </option>
                 <%} %>
               </select>
             </div>
             <div class="col-6">
               <select class="mb-1 form-select" name="color" id="">
                 <% for(let c of product.color){%>
-                <option value="<%= c %>"><%= c %></option>
+                <option value="<%= c %>">
+                  <%= c.slice(1,2).toUpperCase() + c.slice(2) %>
+                </option>
                 <%} %>
               </select>
             </div>

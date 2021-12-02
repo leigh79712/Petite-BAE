@@ -8,7 +8,6 @@ const Color = require("./models/color");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
-const { send } = require("process");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -31,7 +30,8 @@ app.use(methodOverride("_method"));
 
 app.get("/products", async (req, res) => {
   const products = await Product.find({});
-  res.render("index", { products });
+  const category = await Category.find({});
+  res.render("index", { products, category });
 });
 
 app.post("/products", async (req, res) => {
@@ -103,7 +103,7 @@ app.put("/products/:id", async (req, res) => {
   const products = await Product.findByIdAndUpdate(req.params.id, {
     ...req.body,
   });
-  console.log(req.body);
+
   await products.save();
   res.redirect(`/products/${req.params.id}`);
 });

@@ -21,8 +21,8 @@ const addData = async () => {
     const newProduct = new Product({
       products: `${nameProducts(descriptors)} ${nameProducts(products)}`,
       price: price,
-      size: ["XS", "S", "M", "L"],
-      color: ["Black", "White"],
+      size: ["_XS", "_S", "_M", "_L"],
+      color: ["_Black", "_White"],
       images: "/littletree/hat.png",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure fugiat odio dicta distinctio cumque quaerat consequuntur eveniet nulla soluta. Voluptate saepe quo nobis fugit rerum dolores eveniet expedita quae id?",

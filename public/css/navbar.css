@@ -1,0 +1,32 @@
+.logo {
+  margin: 0 auto;
+}
+ul {
+  list-style-type: none;
+  justify-content: center;
+}
+.nav-item a {
+  color: #b08968;
+  font-size: 1.5em;
+  text-decoration: none;
+  min-height: 3em;
+  white-space: nowrap;
+}
+
+.logo-img {
+  display: block;
+  margin: auto;
+}
+
+.login {
+  width: 2em;
+  position: absolute;
+  right: 12em;
+  top: 10px;
+}
+.shopping-bag {
+  width: 2em;
+  position: absolute;
+  right: 9em;
+  top: 10px;
+}
