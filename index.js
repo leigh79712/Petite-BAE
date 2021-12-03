@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-
+const Product = require("./models/products");
 const Category = require("./models/category");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
@@ -9,6 +9,8 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const products = require("./routes/products");
 const ExpressError = require("./utils/ExpressError");
+const { request } = require("http");
+const { response } = require("express");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -52,13 +54,23 @@ app.get("/login", async (req, res) => {
   res.render("user/login", { category });
 });
 
+app.get("/category/:id", async (req, res) => {
+  const { id } = req.params;
+  const cate = await Category.find({ _id: id });
+  const [{ otherCategory }] = cate;
+  const category = await Category.find({});
+  const products = await Product.find({ category: otherCategory });
+  // res.send(products);
+  res.render("products/index", { category, products });
+});
+
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
 
 app.use(async (err, req, res, next) => {
   const category = await Category.find({});
-  const { statusCode } = err;
+  const { statusCode = 500 } = err;
   if (!err.message) err.message = "Oh No, Something went wrong";
   res.status(statusCode).render("error", { category, err });
 });

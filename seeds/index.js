@@ -26,6 +26,7 @@ const addData = async () => {
       images: "/pic/hat.png",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure fugiat odio dicta distinctio cumque quaerat consequuntur eveniet nulla soluta. Voluptate saepe quo nobis fugit rerum dolores eveniet expedita quae id?",
+      category: ["New arrival", "In Stock"],
     });
     await newProduct.save();
   }
