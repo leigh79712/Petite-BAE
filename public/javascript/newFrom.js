@@ -16,6 +16,15 @@ const categoryInput = document.querySelector(".category-input");
 const sizeModal = document.querySelector(".size-modal");
 const colorModal = document.querySelector(".color-modal");
 const categoryModal = document.querySelector(".category-modal");
+// const submit = document.querySelector(".submit");
+
+const form = document.querySelector("#newProduct");
+const sizeCheckboxes = form.querySelectorAll(".size-checkbox");
+const invalidSize = form.querySelector(".size-invalid");
+const colorCheckboxes = form.querySelectorAll(".color-checkbox");
+const invalidColor = form.querySelector(".color-invalid");
+const categoryCheckboxes = form.querySelectorAll(".category-checkbox");
+const invalidCategory = form.querySelector(".category-invalid");
 
 for (let i = 0; i < newSize.length; i++) {
   otherS.push(newSize[i].otherSize);
@@ -115,6 +124,14 @@ const click = (e, container) => {
 
   return clicked, el;
 };
+const checkboxValidity = (checkbox) => {
+  const checkedOne = Array.prototype.slice
+    .call(checkbox)
+    .some((x) => x.checked);
+
+  if (!checkedOne) return false;
+  return true;
+};
 
 otherSize.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -151,3 +168,34 @@ categoryModal.addEventListener("click", function (e) {
   deleteItem(clicked);
   e.preventDefault();
 });
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll(".needs-validation");
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        if (
+          !checkboxValidity(sizeCheckboxes) ||
+          !checkboxValidity(colorCheckboxes) ||
+          !checkboxValidity(categoryCheckboxes)
+        ) {
+          event.preventDefault();
+          event.stopPropagation();
+          invalidSize.classList.remove("hidden");
+          invalidColor.classList.remove("hidden");
+          invalidCategory.classList.remove("hidden");
+        }
+
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})();

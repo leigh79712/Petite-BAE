@@ -1,20 +1,36 @@
 <% layout('/layout/boilerplate') -%>
 <link rel="stylesheet" href="/css/form.css" />
-<h1 class="text-center">Add New Product</h1>
+<script defer src="/javascript/form.js"></script>
+
+<h1 class="text-center">Sign Up</h1>
 <div class="col-md-6 offset-md-3">
-  <form class="form" action="/products" method="post">
+  <form class="form needs-validation" action="/signup" method="post" novalidate>
     <div class="mb-3">
-      <label class="form-lable" for="porducts">Products</label>
-      <input
-        form="newProduct"
-        class="form-control"
-        type="text"
-        name="products"
-      />
+      <label class="form-lable" for="firstname">First name</label>
+      <input class="form-control" type="text" name="firstname" required />
+      <div class="invalid-feedback">Please type your first name.</div>
     </div>
     <div class="mb-3">
-      <label class="form-lable" for="price">Price</label>
-      <input id="newProduct" class="form-control" type="number" name="price" />
+      <label class="form-lable" for="lastname">Last name</label>
+      <input class="form-control" type="text" name="lastname" required />
+      <div class="invalid-feedback">Please type your last name.</div>
     </div>
+    <div class="mb-3">
+      <label class="form-lable" for="username">Username</label>
+      <input class="form-control" type="text" name="username" required />
+      <div class="invalid-feedback">Please choose a username.</div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-lable" for="password">password</label>
+      <input class="form-control" type="password" name="password" required />
+      <div class="invalid-feedback">Please enter the password.</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-lable" for="email">E-mail</label>
+      <input class="form-control" type="email" name="email" required />
+      <div class="invalid-feedback">Please enter an e-mail.</div>
+    </div>
+    <input class="btn btn-outline-secondary" type="submit" value="Sign up" />
   </form>
 </div>

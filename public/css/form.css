@@ -22,3 +22,12 @@
 .hidden {
   display: none;
 }
+
+.size-invalid,
+.color-invalid,
+.category-invalid {
+  width: 100%;
+  margin-top: 0.25 rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}

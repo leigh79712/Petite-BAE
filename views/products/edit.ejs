@@ -34,7 +34,7 @@
         <input
         form="newProduct"
           type="checkbox"
-          class="btn-check"
+          class="btn-check size-checkbox"
           value="<%= s.otherSize %>"
           name="size"
           id="<%= s.otherSize + "_s" %>"
@@ -42,11 +42,13 @@
         />
         <label class="btn btn-outline-secondary" for="<%= s.otherSize + "_s" %>"><%= String(s.otherSize).toUpperCase().slice(1) %></label>
        <% } %> 
-    
-    <!-- Button trigger modal -->
       <button type="button" class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#sizeModal">
         Edit
       </button>
+       </button>
+       <div class="size-invalid hidden">
+        Please choose at least one size
+      </div>
 
   </div>
   </div>
@@ -58,7 +60,7 @@
       <input
             form="newProduct"
             type="checkbox"
-            class="btn-check"
+            class="btn-check color-checkbox"
             value="<%= c.otherColor %>"
             name="color"
             id="<%= c.otherColor.replace(" ", "_")+"_c" %>"
@@ -72,6 +74,9 @@
       <button type="button" class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#colorModal">
         Edit
       </button>
+        <div class="color-invalid hidden">
+        Please choose at least one one color
+      </div>
     </div>
 
    
@@ -84,7 +89,7 @@
       <input
             form="newProduct"
             type="checkbox"
-            class="btn-check"
+            class="btn-check category-checkbox"
             value="<%= cate.otherCategory %>"
             name="category"
             id="<%= cate.otherCategory.replace(" ", "_")+"_c" %>"
@@ -95,7 +100,9 @@
       <%= cate.otherCategory[1].toUpperCase() + cate.otherCategory.slice(2) %></label>
       <% } %> 
       <button class="btn btn-outline-success float-end" data-bs-toggle="modal" data-bs-target="#categoryModal" type="button">Edit</button>
-
+      <div class="category-invalid hidden">
+        Please choose at least one category
+      </div>
     </div>
     
   </div>

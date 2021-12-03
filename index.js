@@ -87,6 +87,13 @@ app.delete("/products/size/:id", async (req, res) => {
   await Size.findByIdAndDelete(id);
   // res.location("back");
 });
+
+app.delete("/products/category/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  await Category.findByIdAndDelete(id);
+  // res.location("back");
+});
 const recommendProducts = [];
 const randomProducts = async function (times) {
   const allProducts = await Product.find({});
