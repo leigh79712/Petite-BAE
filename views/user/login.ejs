@@ -1,2 +1,22 @@
 <% layout('/layout/boilerplate') -%>
 <link rel="stylesheet" href="/css/form.css" />
+<script defer src="/javascript/form.js"></script>
+
+<h1 class="text-center">Login</h1>
+<div class="col-md-6 offset-md-3">
+  <form class="form needs-validation" action="/Login" method="post" novalidate>
+    <div class="mb-3">
+      <label class="form-lable" for="username">Username</label>
+      <input class="form-control" type="text" name="username" required />
+      <div class="invalid-feedback">Please enter username.</div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-lable" for="password">password</label>
+      <input class="form-control" type="password" name="password" required />
+      <div class="invalid-feedback">Please enter the password.</div>
+    </div>
+
+    <input class="btn btn-outline-secondary" type="submit" value="Login" />
+  </form>
+</div>
