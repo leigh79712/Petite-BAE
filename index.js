@@ -3,13 +3,19 @@ const app = express();
 const path = require("path");
 const Product = require("./models/products");
 const Category = require("./models/category");
+const ShoppingCart = require("./models/shoppingcart");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const session = require("express-session");
-const products = require("./routes/products");
+const productsRoute = require("./routes/products");
+const userRoute = require("./routes/user");
 const ExpressError = require("./utils/ExpressError");
 const flash = require("connect-flash");
+const User = require("./models/user");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const { isLoggedIn } = require("./middleware");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -47,17 +53,15 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
 
-app.use("/products", products);
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-app.get("/signup", async (req, res) => {
-  const category = await Category.find({});
-  res.render("user/signup", { category });
-});
-app.get("/login", async (req, res) => {
-  const category = await Category.find({});
-  res.render("user/login", { category });
-});
+app.use("/products", productsRoute);
+app.use("/", userRoute);
 
 app.get("/category/:id", async (req, res) => {
   const { id } = req.params;
@@ -67,6 +71,10 @@ app.get("/category/:id", async (req, res) => {
   const products = await Product.find({ category: otherCategory });
   // res.send(products);
   res.render("products/index", { category, products });
+});
+
+app.post("/shoppingcart", async (req, res) => {
+  const shoppingCart = await new ShoppingCart();
 });
 
 app.all("*", (req, res, next) => {
