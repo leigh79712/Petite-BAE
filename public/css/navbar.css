@@ -10,7 +10,7 @@ ul {
   justify-content: center;
 }
 .nav-item a {
-  color: #b08968;
+  color: var(--color-primary);
   font-size: 1.5em;
   text-decoration: none;
   height: 2.5em;

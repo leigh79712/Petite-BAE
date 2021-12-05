@@ -26,10 +26,10 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", validateProduct, async (req, res) => {
   // if (!req.body) throw new ExpressError("Invalid Product Data", 400);
-
   const product = await new Product(req.body);
   console.log(req.body);
   product.save();
+  req.flash("success", "Successfully upload a product!");
   res.redirect(`/products/${product._id}`);
 });
 
@@ -90,12 +90,20 @@ const randomProducts = async function (times) {
     recommendProducts.push(allProducts[random]);
   }
 };
-randomProducts(7);
+randomProducts(9);
 
 router.get("/:id", async (req, res) => {
   const products = await Product.findById(req.params.id);
   const category = await Category.find({});
-  res.render("products/show", { products, recommendProducts, category });
+  if (!products) {
+    req.flash("error", "Cannot find that campground!");
+    return res.redirect("/products");
+  }
+  res.render("products/show", {
+    products,
+    recommendProducts,
+    category,
+  });
 });
 
 router.delete("/:id", async (req, res) => {
@@ -108,7 +116,10 @@ router.put("/:id", async (req, res) => {
   const products = await Product.findByIdAndUpdate(req.params.id, {
     ...req.body,
   });
+
   await products.save();
+  req.flash("success", "Successfully edit a product!");
+
   res.redirect(`/products/${req.params.id}`);
 });
 
@@ -117,6 +128,10 @@ router.get("/:id/edit", async (req, res) => {
   const color = await Color.find({});
   const category = await Category.find({});
   const products = await Product.findById(req.params.id);
+  if (!products) {
+    req.flash("error", "Cannot find that campground!");
+    return res.redirect("/products");
+  }
   res.render("products/edit", { products, size, color, category });
 });
 

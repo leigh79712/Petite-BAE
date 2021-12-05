@@ -1,143 +1,188 @@
 <% layout('/layout/boilerplate') -%>
 <link rel="stylesheet" href="/css/show.css" />
-
-<div class="row mb-3">
-  <div class="col-md-6 mb-3">
-    <div id="images" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="<%= products.images %>" class="d-block w-100" alt="..." />
+<script defer src="/javascript/show.js"></script>
+<div class="container">
+  <div class="row mb-5">
+    <div class="col-md-6">
+      <div id="images" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="<%= products.images %>"
+              class="d-block w-100 rounded"
+              alt="..."
+            />
+          </div>
         </div>
+        <% if(products.images.length > 1 ) { %>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#images"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#images"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <% } %>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#images"
-        data-bs-slide="prev"
+    </div>
+    <div class="col-md-6">
+      <div class="mb-5">
+        <h1 class="text-center"><%= products.products %></h1>
+      </div>
+      <form action="" class="form-width">
+        <div class="form-float">
+          <div class="mb-4">
+            <label class="form-lable" for="size">Size</label>
+            <% for(let s of products.size) { %>
+            <input
+              type="radio"
+              class="btn-check"
+              value="<%= s %>"
+              name="size"
+              id="<%= s %>"
+            />
+            <label class="btn btn-outline-secondary" for="<%= s %>"
+              ><%= String(s).toUpperCase().slice(1) %>
+            </label>
+            <%}; %>
+          </div>
+          <div class="mb-4">
+            <label class="form-lable" for="color">Color</label>
+            <% for(let c of products.color) { %>
+            <input
+              type="radio"
+              class="btn-check"
+              value="<%= c %>"
+              name="color"
+              id="<%= c %>"
+            />
+            <label class="btn btn-outline-secondary" for="<%= c %>"
+              ><%= c.slice(1,2).toUpperCase() + c.slice(2) %>
+            </label>
+            <%}; %>
+          </div>
+          <div class="mb-4">
+            <input
+              id="inc"
+              class="btn-outline-secondary"
+              type="button"
+              value="+"
+            />
+            <input type="number" id="count" type="text" value="1" size="1" />
+            <input
+              id="dec"
+              class="btn-outline-secondary"
+              type="button"
+              value="-"
+            />
+          </div>
+          <input
+            class="btn btn-outline-secondary float-end"
+            type="submit"
+            value="Add to cart"
+          />
+        </div>
+        <h4>€ <%= products.price %></h4>
+      </form>
+
+      <a
+        href="/products/<%= products._id %>/edit"
+        class="btn btn-outline-secondary mb-3"
+        >Edit</a
       >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#images"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+      <form action="/products/<%= products._id %>?_method=DELETE" method="post">
+        <button class="btn btn-outline-danger" type="submit">Delete</button>
+      </form>
     </div>
   </div>
-  <div class="col-md-6">
-    <form action="">
-      <h1 class="text-center"><%= products.products %></h1>
-      <h5>€ <%= products.price %></h5>
-      <div class="mb-3">
-        <label class="form-lable" for="size">Size</label>
-        <% for(let s of products.size) { %>
-        <input
-          type="radio"
-          class="btn-check"
-          value="<%= s %>"
-          name="size"
-          id="<%= s %>"
-        />
-        <label class="btn btn-outline-secondary" for="<%= s %>"
-          ><%= String(s).toUpperCase().slice(1) %>
-        </label>
-        <%}; %>
-      </div>
-      <div class="mb-3">
-        <label class="form-lable" for="color">Color</label>
-        <% for(let c of products.color) { %>
-        <input
-          type="radio"
-          class="btn-check"
-          value="<%= c %>"
-          name="color"
-          id="<%= c %>"
-        />
-        <label class="btn btn-outline-secondary" for="<%= c %>"
-          ><%= c.slice(1,2).toUpperCase() + c.slice(2) %>
-        </label>
-        <%}; %>
-      </div>
-      <div class="mb-3">
-        <label for="qty">Quantity</label>
-        <input type="number" name="qty" id="qty" min="0" />
-      </div>
-      <input
-        class="btn btn-outline-secondary"
-        type="submit"
-        value="Add to cart"
-      />
-    </form>
-    <a
-      href="/products/<%= products._id %>/edit"
-      class="btn btn-outline-secondary"
-      >Edit</a
-    >
+  <div class="mb-5 text-center">
+    <h4><%=products.description%></h4>
   </div>
-</div>
-<div class="mb-3 text-center">
-  <h4><%=products.description%></h4>
-</div>
-<div class="mb-3">
-  <hr />
-</div>
-<div class="mb-3">
-  <h4 class="text-center">Size</h4>
-  <% for(let s of products.size) { %>
-  <p class="text-center"><%= String(s).toUpperCase().slice(1) %></p>
-  <% } %>
-</div>
-<div class="mb-3">
-  <ul>
-    <li>購買前請詳閱購物須知</li>
-    <li>商品皆採預購制，訂單完成約7-30個工作天(不含假日)寄出。</li>
-    <li>童裝統一收單後會立即與廠商叫貨，若超過收單時間則算下個禮拜的單喔。</li>
-    <li>熱買品牌及特定商品可能會等待超過30天，接受的媽咪在下單喔。</li>
-    <li>現貨商品請跟預購商品分開下單，不然會等預購商品到貨才出貨喔。</li>
-    <li>現貨商品皆於48小時內出貨。</li>
-  </ul>
-</div>
-<div class="mb-3">
-  <h5>You might also like</h5>
-  <div class="row">
-    <% for(let p of recommendProducts) {%>
-    <div class="mb-3 col">
-      <div class="card" style="width: 15rem">
-        <a href="/products/<%= p._id %>">
-          <img src="<%= p.images %>" class="card-img-top" alt="" />
-        </a>
-        <div class="card-body">
-          <h5 class="card-title"><%= p.products %></h5>
-          <div class="row">
-            <div class="col-6">
-              <select class="col-12 form-select mb-1" name="size" id="">
-                <% for(let s of p.size){%>
-                <option value="<%= s %>"><%= s %></option>
-                <%} %>
-              </select>
-            </div>
-            <div class="col-6">
-              <select class="mb-1 form-select" name="color" id="">
-                <% for(let c of p.color){%>
-                <option value="<%= c %>"><%= c %></option>
-                <%} %>
-              </select>
-            </div>
-            <div class="col-6"><p><%= p.price %></p></div>
-            <div class="col-6">
-              <a href="#" class="card-link btn btn-sm btn-outline-primary"
-                >ADD</a
-              >
+  <div class="mb-5">
+    <hr />
+  </div>
+  <div class="mb-5">
+    <h4 class="text-center mb-5">Size</h4>
+    <% for(let s of products.size) { %>
+    <div class="text-center">
+      <strong><%= String(s).toUpperCase().slice(1) %></strong>
+    </div>
+    <% } %>
+  </div>
+  <div class="mb-3">
+    <ul>
+      <li>購買前請詳閱購物須知</li>
+      <li>商品皆採預購制，訂單完成約7-30個工作天(不含假日)寄出。</li>
+      <li>
+        童裝統一收單後會立即與廠商叫貨，若超過收單時間則算下個禮拜的單喔。
+      </li>
+      <li>熱買品牌及特定商品可能會等待超過30天，接受的媽咪在下單喔。</li>
+      <li>現貨商品請跟預購商品分開下單，不然會等預購商品到貨才出貨喔。</li>
+      <li>現貨商品皆於48小時內出貨。</li>
+    </ul>
+  </div>
+  <div class="mb-5">
+    <div class="md-3">
+      <h5 class="md-3">You might also like</h5>
+    </div>
+    <div class="hidden">
+      <div class="row flex-nowrap gap-3 slide-random">
+        <% for(let p of recommendProducts) {%>
+        <div class="mb-3 col">
+          <div class="card" style="width: 15rem">
+            <a href="/products/<%= p._id %>">
+              <img src="<%= p.images %>" class="card-img-top" alt="" />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title"><%= p.products %></h5>
+              <div class="row">
+                <div class="col-6">
+                  <select class="col-12 form-select mb-1" name="size" id="">
+                    <% for(let s of p.size){%>
+                    <option value="<%= s %>">
+                      <%= String(s).toUpperCase().slice(1) %>
+                    </option>
+                    <%} %>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <select class="mb-1 form-select" name="color" id="">
+                    <% for(let c of p.color){%>
+                    <option value="<%= c %>">
+                      <%= c.slice(1,2).toUpperCase() + c.slice(2) %>
+                    </option>
+                    <%} %>
+                  </select>
+                </div>
+                <div class="col-6"><p><%= p.price %></p></div>
+                <div class="col-6">
+                  <a href="#" class="card-link btn btn-sm btn-outline-primary"
+                    >ADD</a
+                  >
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <% } %>
       </div>
+      <button class="slider__btn slider__btn--left btn-outline-secondary">
+        &larr;
+      </button>
+      <button class="slider__btn slider__btn--right btn-outline-secondary">
+        &rarr;
+      </button>
     </div>
-    <% } %>
   </div>
 </div>

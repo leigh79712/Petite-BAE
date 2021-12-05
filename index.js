@@ -9,8 +9,7 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const products = require("./routes/products");
 const ExpressError = require("./utils/ExpressError");
-const { request } = require("http");
-const { response } = require("express");
+const flash = require("connect-flash");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -30,6 +29,7 @@ app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
+app.use(flash());
 
 const sessionConfig = {
   secret: "thisshouldbeabettersecet!",
@@ -42,6 +42,11 @@ const sessionConfig = {
   },
 };
 app.use(session(sessionConfig));
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 app.use("/products", products);
 
