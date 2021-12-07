@@ -34,9 +34,16 @@ router.post(
     failureRedirect: "login",
   }),
   (req, res) => {
+    console.log(req.user);
     req.flash("success", "Welcome back!");
     res.redirect("/products");
   }
 );
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  req.flash("success", "See you next time!");
+  res.redirect("/products");
+});
 
 module.exports = router;

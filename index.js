@@ -16,6 +16,7 @@ const User = require("./models/user");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { isLoggedIn } = require("./middleware");
+const reviews = require("../../coltnew/yaleCamp/models/reviews");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -48,18 +49,19 @@ const sessionConfig = {
   },
 };
 app.use(session(sessionConfig));
-app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  next();
-});
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 app.use("/products", productsRoute);
 app.use("/", userRoute);
 
@@ -73,8 +75,23 @@ app.get("/category/:id", async (req, res) => {
   res.render("products/index", { category, products });
 });
 
-app.post("/shoppingcart", async (req, res) => {
-  const shoppingCart = await new ShoppingCart();
+app.post("/user/:id/shoppingcart/:productID", async (req, res) => {
+  const { id } = req.user;
+  const User = await User.findById(id);
+  const { productID } = req.params;
+  const product = await Product.findById(productID);
+  const { products, price, images } = product;
+  const { size, color } = req.body;
+  const shoppingCart = await new ShoppingCart({
+    products,
+    price,
+    images,
+    size,
+    color,
+  });
+  shoppingCart.user = req.user._id;
+  User.shoppingCart.push();
+  await User.save();
 });
 
 app.all("*", (req, res, next) => {

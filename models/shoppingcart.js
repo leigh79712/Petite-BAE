@@ -7,6 +7,10 @@ const ShoppingCartSchema = new Schema({
   images: String,
   size: Array,
   color: Array,
+  user: {
+    type: Schema.Types.ObjectId,
+    res: "User",
+  },
 });
 
 module.exports = mongoose.model("ShoppingCart", ShoppingCartSchema);

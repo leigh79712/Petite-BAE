@@ -25,7 +25,7 @@ ul {
 .login {
   width: 2em;
   position: absolute;
-  right: 12em;
+  right: 15em;
   top: 10px;
 }
 .shopping-bag {
@@ -37,6 +37,12 @@ ul {
 .signup {
   width: 1.5em;
   position: absolute;
-  right: 15em;
+  right: 18em;
   top: 14px;
+}
+.logout {
+  width: 2em;
+  position: absolute;
+  right: 12em;
+  top: 10px;
 }
