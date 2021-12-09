@@ -11,10 +11,12 @@ const UserSchema = new Schema({
   },
   firstname: String,
   lastname: String,
-  shoppingCart: {
-    type: Schema.Types.ObjectId,
-    ref: "ShoppingCart",
-  },
+  shoppingCart: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "ShoppingCart",
+    },
+  ],
 });
 
 UserSchema.plugin(passportLocalMongoose);

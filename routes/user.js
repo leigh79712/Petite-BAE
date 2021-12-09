@@ -34,7 +34,6 @@ router.post(
     failureRedirect: "login",
   }),
   (req, res) => {
-    console.log(req.user);
     req.flash("success", "Welcome back!");
     res.redirect("/products");
   }

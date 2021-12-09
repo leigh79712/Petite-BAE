@@ -5,8 +5,8 @@ const ShoppingCartSchema = new Schema({
   products: String,
   price: Number,
   images: String,
-  size: Array,
-  color: Array,
+  size: String,
+  color: String,
   user: {
     type: Schema.Types.ObjectId,
     res: "User",

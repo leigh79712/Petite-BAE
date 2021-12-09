@@ -16,7 +16,6 @@ const User = require("./models/user");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { isLoggedIn } = require("./middleware");
-const reviews = require("../../coltnew/yaleCamp/models/reviews");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -56,12 +55,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
+
 app.use("/products", productsRoute);
 app.use("/", userRoute);
 
@@ -71,14 +71,15 @@ app.get("/category/:id", async (req, res) => {
   const [{ otherCategory }] = cate;
   const category = await Category.find({});
   const products = await Product.find({ category: otherCategory });
+  const user = await User.findById(req.user).populate("shoppingCart");
   // res.send(products);
-  res.render("products/index", { category, products });
+  res.render("products/index", { category, products, user });
 });
 
 app.post("/user/:id/shoppingcart/:productID", async (req, res) => {
   const { id } = req.user;
-  const User = await User.findById(id);
   const { productID } = req.params;
+  const user = await User.findById(id);
   const product = await Product.findById(productID);
   const { products, price, images } = product;
   const { size, color } = req.body;
@@ -89,9 +90,19 @@ app.post("/user/:id/shoppingcart/:productID", async (req, res) => {
     size,
     color,
   });
-  shoppingCart.user = req.user._id;
-  User.shoppingCart.push();
-  await User.save();
+  shoppingCart.user = req.user;
+  user.shoppingCart.push(shoppingCart);
+  console.log(user);
+  await user.save();
+  await shoppingCart.save();
+});
+
+app.delete("/user/:id/shoppingcart/:shoppingcartID", async (req, res) => {
+  const { id, shoppingcartID } = req.params;
+  const user = await User.findByIdAndUpdate(id, {
+    $pull: { shoppingCart: shoppingcartID },
+  });
+  const shoppingCart = await ShoppingCart.findByIdAndDelete(shoppingcartID);
 });
 
 app.all("*", (req, res, next) => {

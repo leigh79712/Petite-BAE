@@ -46,3 +46,31 @@ ul {
   right: 12em;
   top: 10px;
 }
+
+.shopping-cart-display {
+  border: none;
+  align-content: start;
+}
+.card-img {
+  width: 4em;
+  display: inline;
+}
+.delete-form {
+  display: inline;
+  position: relative;
+  top: -3em;
+}
+.shoppingCart-card-title {
+  font-size: 1em;
+  display: inline;
+  position: relative;
+  top: -1em;
+}
+
+.shoppingCart-card-text {
+  font-size: 1em;
+  display: inline;
+  position: relative;
+  top: -2em;
+  left: 5em;
+}

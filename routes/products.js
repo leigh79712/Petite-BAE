@@ -7,6 +7,7 @@ const Color = require("../models/color");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const { productSchema } = require("../Schema.js");
+const User = require("../models/user");
 
 const validateProduct = (req, res, next) => {
   const { error } = productSchema.validate(req.body);
@@ -21,7 +22,9 @@ const validateProduct = (req, res, next) => {
 router.get("/", async (req, res, next) => {
   const products = await Product.find({});
   const category = await Category.find({});
-  res.render("products/index", { products, category });
+  const user = await User.findById(req.user).populate("shoppingCart");
+  console.log(user);
+  res.render("products/index", { user, products, category });
 });
 
 router.post("/", validateProduct, async (req, res) => {

@@ -65,22 +65,26 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <% if(currentUser) { %> 
+             
+                <% for(let i of user.shoppingCart){%>
+                <div class="shopping-cart-display mb-3">
+                 <img class="card-img" src="<%= i.images %>" class="img-fluid rounded-start" alt="...">
+                 <h5 class="shoppingCart-card-title"><%= i.products %></h5><br>
+                  <div class="shoppingCart-card-text"><%= i.price %></div>
+                  
+                    <div class="shoppingCart-card-text"><small class="text-muted"><%= i.size.slice(1) %>  <%= i.color.toUpperCase().slice(1,2) + i.color.slice(2) %></small></div>
+             <form class="delete-form" action="/user/<%= currentUser.id %>/shoppingcart/<%= i._id %>?_method=DELETE" method="post">
+                    <input class="btn btn-outline-danger float-end" type="submit" value="D">
+                    </form>
+              </div>
+              
+               <%} %> 
+                 <h5>Total</h5>
+          
+            <% } %> 
+          
+          </li>     
             </ul>
           </li>
         </ul>
