@@ -9,7 +9,19 @@ ul {
   list-style-type: none;
   justify-content: center;
 }
-.nav-item a {
+
+.checkout {
+  position: absolute;
+  bottom: 2em;
+  font-size: 1em;
+  float: right;
+}
+.sum {
+  font-size: 1.5em;
+  font-weight: bold;
+  float: right;
+}
+.nav-link {
   color: var(--color-primary);
   font-size: 1.5em;
   text-decoration: none;

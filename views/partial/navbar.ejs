@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="/css/navbar.css" />
+<script defer>
+  
+</script>
 
 <nav class="nav-top">
   <div class="container">
@@ -11,7 +14,7 @@
       <div><span>Hi, <%= currentUser.username %> </span></div>
       <% } %> 
       <% if(!currentUser){ %>
-        <a class="nav-link" href="/login"><img class="login" src="/pic/account.png" alt="" /></a> 
+        <a href="/login"><img class="login" src="/pic/account.png" alt="" /></a> 
          <a href="/signup"><img class="signup" src="/pic/add-user.png" alt=""/></a>
      <% } %> 
       
@@ -64,26 +67,32 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
+          <li class="nav-item shopping-cart-show">
             <% if(currentUser) { %> 
              
                 <% for(let i of user.shoppingCart){%>
                 <div class="shopping-cart-display mb-3">
                  <img class="card-img" src="<%= i.images %>" class="img-fluid rounded-start" alt="...">
                  <h5 class="shoppingCart-card-title"><%= i.products %></h5><br>
-                  <div class="shoppingCart-card-text"><%= i.price %></div>
+                  <div class="shoppingCart-card-text"><strong><%= i.price %>€</strong></div>
                   
                     <div class="shoppingCart-card-text"><small class="text-muted"><%= i.size.slice(1) %>  <%= i.color.toUpperCase().slice(1,2) + i.color.slice(2) %></small></div>
-             <form class="delete-form" action="/user/<%= currentUser.id %>/shoppingcart/<%= i._id %>?_method=DELETE" method="post">
-                    <input class="btn btn-outline-danger float-end" type="submit" value="D">
+                    <form class="delete-form" action="/user/<%= currentUser.id %>/shoppingcart/<%= i._id %>?_method=DELETE" method="post">
+                     <input class="btn btn-outline-danger float-end" type="submit" value="&times;">
                     </form>
               </div>
-              
+           
                <%} %> 
+               
+               <hr>
                  <h5>Total</h5>
-          
+            <p class="sum"><%= sum %>€</p>
+            <div class="checkout">
+               <a class="btn btn-outline-primary btn-sm" href="/user/<%= currentUser.id %>/checkout">Check Out</a>
             <% } %> 
           
+            </div>
+           
           </li>     
             </ul>
           </li>

@@ -16,6 +16,7 @@ const User = require("./models/user");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { isLoggedIn } = require("./middleware");
+const shoppingcart = require("./models/shoppingcart");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -76,7 +77,13 @@ app.get("/category/:id", async (req, res) => {
   res.render("products/index", { category, products, user });
 });
 
-app.post("/user/:id/shoppingcart/:productID", async (req, res) => {
+app.get("/user/:id/checkout", async (req, res) => {
+  const { id } = req.user;
+  const shoppingCart = await ShoppingCart.find({ user: req.user });
+  res.send(shoppingCart);
+});
+
+app.post("/user/:id/shoppingcart/:productID", isLoggedIn, async (req, res) => {
   const { id } = req.user;
   const { productID } = req.params;
   const user = await User.findById(id);
@@ -92,18 +99,26 @@ app.post("/user/:id/shoppingcart/:productID", async (req, res) => {
   });
   shoppingCart.user = req.user;
   user.shoppingCart.push(shoppingCart);
-  console.log(user);
+  console.log(shoppingCart);
   await user.save();
   await shoppingCart.save();
+  // const redirectUrl = req.session.returnTo || "/products";
+  // res.redirect(redirectUrl);
 });
 
-app.delete("/user/:id/shoppingcart/:shoppingcartID", async (req, res) => {
-  const { id, shoppingcartID } = req.params;
-  const user = await User.findByIdAndUpdate(id, {
-    $pull: { shoppingCart: shoppingcartID },
-  });
-  const shoppingCart = await ShoppingCart.findByIdAndDelete(shoppingcartID);
-});
+app.delete(
+  "/user/:id/shoppingcart/:shoppingcartID",
+  isLoggedIn,
+  async (req, res) => {
+    const { id, shoppingcartID } = req.params;
+    const user = await User.findByIdAndUpdate(id, {
+      $pull: { shoppingCart: shoppingcartID },
+    });
+    const shoppingCart = await ShoppingCart.findByIdAndDelete(shoppingcartID);
+    // const redirectUrl = req.session.returnTo || "/products";
+    // res.redirect(redirectUrl);
+  }
+);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));

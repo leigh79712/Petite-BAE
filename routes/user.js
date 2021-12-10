@@ -13,12 +13,14 @@ router.get("/login", async (req, res) => {
   res.render("user/login", { category });
 });
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res, next) => {
   try {
     const { email, username, password, lastname, firstname } = req.body;
     const user = await new User({ email, username, lastname, firstname });
     const registeredUser = await User.register(user, password);
-    console.log(registeredUser);
+    req.login(registeredUser, (err) => {
+      if (err) return next(err);
+    });
     req.flash("success", "Success register!");
     res.redirect("/products");
   } catch (e) {

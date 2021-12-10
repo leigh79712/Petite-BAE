@@ -23,8 +23,14 @@ router.get("/", async (req, res, next) => {
   const products = await Product.find({});
   const category = await Category.find({});
   const user = await User.findById(req.user).populate("shoppingCart");
-  console.log(user);
-  res.render("products/index", { user, products, category });
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price;
+    }
+  }
+
+  res.render("products/index", { user, products, category, sum });
 });
 
 router.post("/", validateProduct, async (req, res) => {
