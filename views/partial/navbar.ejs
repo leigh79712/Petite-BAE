@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="/css/navbar.css" />
-<script defer>
-  
-</script>
+
 
 <nav class="nav-top">
   <div class="container">
@@ -69,9 +67,9 @@
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item shopping-cart-show">
             <% if(currentUser) { %> 
-             
+
                 <% for(let i of user.shoppingCart){%>
-                <div class="shopping-cart-display mb-3">
+                <div class="shopping-cart-display mb-3 delete-div">
                  <img class="card-img" src="<%= i.images %>" class="img-fluid rounded-start" alt="...">
                  <h5 class="shoppingCart-card-title"><%= i.products %></h5><br>
                   <div class="shoppingCart-card-text"><strong><%= i.price %>€</strong></div>

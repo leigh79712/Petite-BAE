@@ -29,7 +29,7 @@ router.get("/", async (req, res, next) => {
       sum += p.price;
     }
   }
-
+  console.log(user);
   res.render("products/index", { user, products, category, sum });
 });
 
@@ -104,14 +104,24 @@ randomProducts(9);
 router.get("/:id", async (req, res) => {
   const products = await Product.findById(req.params.id);
   const category = await Category.find({});
+  const user = await User.findById(req.user).populate("shoppingCart");
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price;
+    }
+  }
   if (!products) {
-    req.flash("error", "Cannot find that campground!");
+    req.flash("error", "Cannot find that product!");
     return res.redirect("/products");
   }
+  console.log(user);
   res.render("products/show", {
+    user,
     products,
     recommendProducts,
     category,
+    sum,
   });
 });
 

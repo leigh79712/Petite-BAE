@@ -7,6 +7,7 @@ const ShoppingCartSchema = new Schema({
   images: String,
   size: String,
   color: String,
+  qty: Number,
   user: {
     type: Schema.Types.ObjectId,
     res: "User",

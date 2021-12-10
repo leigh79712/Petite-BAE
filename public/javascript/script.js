@@ -6,10 +6,17 @@ const deleteItem = (e) => {
     body: {},
   });
 };
+
 deleteForm.forEach((el) => {
   el.addEventListener("submit", function (e) {
+    const deleteDiv = e.target.closest(".delete-div");
     deleteItem(e);
-    console.log(e);
+    e.target.remove();
+    deleteDiv.remove();
     e.preventDefault();
   });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("everything is loaded");
 });

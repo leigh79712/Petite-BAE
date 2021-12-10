@@ -16,7 +16,6 @@ const User = require("./models/user");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { isLoggedIn } = require("./middleware");
-const shoppingcart = require("./models/shoppingcart");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -73,14 +72,31 @@ app.get("/category/:id", async (req, res) => {
   const category = await Category.find({});
   const products = await Product.find({ category: otherCategory });
   const user = await User.findById(req.user).populate("shoppingCart");
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price;
+    }
+  }
   // res.send(products);
-  res.render("products/index", { category, products, user });
+  res.render("products/index", { category, products, user, sum });
 });
 
+app.post("/user", (req, res) => {
+  res.send(req.body);
+});
 app.get("/user/:id/checkout", async (req, res) => {
   const { id } = req.user;
+  const user = await User.findById(req.user).populate("shoppingCart");
   const shoppingCart = await ShoppingCart.find({ user: req.user });
-  res.send(shoppingCart);
+  const category = await Category.find({});
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price;
+    }
+  }
+  res.render("products/shoppingCart", { user, shoppingCart, category, sum });
 });
 
 app.post("/user/:id/shoppingcart/:productID", isLoggedIn, async (req, res) => {
@@ -89,21 +105,22 @@ app.post("/user/:id/shoppingcart/:productID", isLoggedIn, async (req, res) => {
   const user = await User.findById(id);
   const product = await Product.findById(productID);
   const { products, price, images } = product;
-  const { size, color } = req.body;
+  const { size, color, qty } = req.body;
   const shoppingCart = await new ShoppingCart({
     products,
     price,
     images,
     size,
     color,
+    qty,
   });
   shoppingCart.user = req.user;
   user.shoppingCart.push(shoppingCart);
   console.log(shoppingCart);
-  await user.save();
-  await shoppingCart.save();
-  // const redirectUrl = req.session.returnTo || "/products";
-  // res.redirect(redirectUrl);
+  // await user.save();
+  // await shoppingCart.save();
+
+  // res.redirect(`/user/${id}/checkout`);
 });
 
 app.delete(

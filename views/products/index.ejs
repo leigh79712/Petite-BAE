@@ -7,22 +7,28 @@
   <div class="row">
     <% for(let product of products) {%>
     <div class="mb-3 col">
-      <div class="card" style="width: 18rem">
+      <div class="card" style="width: 14rem">
         <% if(currentUser){%>
             <form class="form"
                 action="/user/<%= currentUser._id %>/shoppingcart/<%= product._id %>"
                 method="post"
               >
          <% } %> 
-        <a href="/products/<%= product._id %>">
-          <img src="<%= product.images %>" class="card-img-top" alt="" />
-        </a>
+         <div class="img-hover">
+          <a href="/products/<%= product._id %>">
+           <img src="<%= product.images %>" class="card-img-top" alt="" />
+           </a>
+        <div class="hidden show-detail text-center">
+          <p>See more detail</p>
+        </div>
+         </div>
+        
         <div class="card-body">
     
           <h5 class="card-title" ><%= product.products %></h5>
           <div class="row">
             <div class="col-6">
-              <select class="col-12 form-select mb-1" name="size" id="">
+              <select class="col-12 form-select form-select-sm mb-1" name="size" id="">
                 <% for(let s of product.size){%>
                 <option value="<%= s %>">
                   <%= String(s).toUpperCase().slice(1) %>
@@ -31,7 +37,7 @@
               </select>
             </div>
             <div class="col-6">
-              <select class="mb-1 form-select" name="color" id="">
+              <select class="mb-1 form-select form-select-sm" name="color" id="">
                 <% for(let c of product.color){%>
                 <option value="<%= c %>">
                   <%= c.slice(1,2).toUpperCase() + c.slice(2) %>
@@ -39,7 +45,7 @@
                 <%} %>
               </select>
             </div>
-            <div class="col-6"><p><%= product.price %></p></div>
+            <div class="col-6"><p><%= product.price %> €</p></div>
             <div class="col-6">
               <input value="Add" type="submit" class="card-link btn btn-sm btn-outline-primary"
                 >
@@ -50,13 +56,13 @@
               method="post"
               class="col-6"
             >
-              <button class="btn btn-outline-danger" type="submit">
+              <button class="btn btn-outline-danger btn-sm" type="submit">
                 Delete
               </button>
             </form>
             <a
               href="/products/<%= products._id %>/edit"
-              class="btn btn-outline-secondary col-6"
+              class="btn btn-outline-secondary btn-sm col-6"
               >Edit</a
             >
           </div>
