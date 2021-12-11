@@ -1,0 +1,18 @@
+.shoppingCart-card-img {
+  width: 7em;
+}
+.card {
+  border: none;
+  border-bottom: 1px solid var(--color-second);
+}
+
+#count {
+  width: 5em;
+  border: none;
+  border-bottom: solid 1px var(--color-second);
+  text-align: center;
+}
+
+.center {
+  width: 80%;
+}

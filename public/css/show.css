@@ -13,13 +13,8 @@
   border-bottom: solid 1px var(--color-second);
   text-align: center;
 }
-#inc,
-#dec {
-  width: 2em;
-  border-radius: 2px;
-  margin-bottom: 5em;
-}
-.hidden {
+
+.overflow {
   width: 80%;
   overflow: hidden;
   margin: 0 auto;

@@ -26,10 +26,9 @@ router.get("/", async (req, res, next) => {
   let sum = 0;
   if (user) {
     for (let p of user.shoppingCart) {
-      sum += p.price;
+      sum += p.price * p.qty;
     }
   }
-  console.log(user);
   res.render("products/index", { user, products, category, sum });
 });
 
@@ -108,7 +107,7 @@ router.get("/:id", async (req, res) => {
   let sum = 0;
   if (user) {
     for (let p of user.shoppingCart) {
-      sum += p.price;
+      sum += p.price * p.qty;
     }
   }
   if (!products) {

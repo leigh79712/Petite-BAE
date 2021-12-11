@@ -43,7 +43,6 @@
       <% if(currentUser){%>
       <form
         action="/user/<%= currentUser._id %>/shoppingcart/<%= products._id %>"
-        class="form-width"
         method="post"
       >
         <% } %>
@@ -51,7 +50,7 @@
           <h1 class="text-center"><%= products.products %></h1>
         </div>
 
-        <div class="form-float">
+        <div class="form-float form-width">
           <div class="mb-4">
             <label class="form-lable" for="size">Size</label>
             <% for(let s of products.size) { %>
@@ -87,14 +86,14 @@
           <div class="mb-4">
             <input
               id="inc"
-              class="btn-outline-secondary"
+              class="btn btn-outline-secondary"
               type="button"
               value="+"
             />
-            <input type="number" id="count" type="text" value="1" size="1" />
+            <input name="qty" id="count" type="text" value="1" size="1" />
             <input
               id="dec"
-              class="btn-outline-secondary"
+              class="btn btn-outline-secondary"
               type="button"
               value="-"
             />
@@ -104,8 +103,8 @@
             type="submit"
             value="Add to cart"
           />
+          <h4><%= products.price %> €</h4>
         </div>
-        <h4><%= products.price %> €</h4>
       </form>
 
       <a
@@ -148,7 +147,7 @@
     <div class="md-3">
       <h5 class="md-3">You might also like</h5>
     </div>
-    <div class="hidden">
+    <div class="overflow">
       <div class="row flex-nowrap gap-3 slide-random">
         <% for(let p of recommendProducts) {%>
         <div class="mb-3 col">
@@ -156,43 +155,16 @@
             <a href="/products/<%= p._id %>">
               <img src="<%= p.images %>" class="card-img-top" alt="" />
             </a>
+            <div class="hidden show-detail text-center">
+              <div class="mb-2">
+                <a class="seeDetail" href="/products/<%= p._id %>"
+                  >See more detail</a
+                >
+              </div>
+            </div>
             <div class="card-body">
-              <% if(currentUser){ %>
-              <form
-                action="/user/<%= currentUser._id %>/shoppingcart/<%= p._id %>"
-                method="post"
-              >
-                <% } %>
-                <h5 class="card-title"><%= p.products %></h5>
-                <div class="row">
-                  <div class="col-6">
-                    <select class="col-12 form-select mb-1" name="size" id="">
-                      <% for(let s of p.size){%>
-                      <option value="<%= s %>">
-                        <%= String(s).toUpperCase().slice(1) %>
-                      </option>
-                      <%} %>
-                    </select>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <select class="mb-1 form-select" name="color" id="">
-                      <% for(let c of p.color){%>
-                      <option value="<%= c %>">
-                        <%= c.slice(1,2).toUpperCase() + c.slice(2) %>
-                      </option>
-                      <%} %>
-                    </select>
-                  </div>
-                  <div class="col-6"><p><%= p.price %> €</p></div>
-                  <div class="col-6">
-                    <input
-                      type="submit"
-                      class="card-link btn btn-sm btn-outline-primary"
-                      value="Add"
-                    />
-                  </div>
-                </div>
-              </form>
+              <h5 class="card-title"><%= p.products %></h5>
+              <div class="row"></div>
             </div>
           </div>
         </div>

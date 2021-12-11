@@ -41,3 +41,12 @@ window.onload = function () {
   btnLeft.addEventListener("click", nextSlide);
   btnRight.addEventListener("click", prevSlide);
 };
+// showImg.forEach((el) => {
+//   const showDetail = el.querySelector(".show-detail");
+//   el.addEventListener("mouseenter", function () {
+//     showDetail.classList.toggle("hidden");
+//   });
+//   el.addEventListener("mouseleave", function () {
+//     showDetail.classList.toggle("hidden");
+//   });
+// });

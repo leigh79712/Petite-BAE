@@ -1,21 +1,20 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const Product = require("./models/products");
 const Category = require("./models/category");
-const ShoppingCart = require("./models/shoppingcart");
+const Product = require("./models/products");
+const User = require("./models/user");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const productsRoute = require("./routes/products");
-const userRoute = require("./routes/user");
+const registerRoute = require("./routes/register");
+const userShoppingRoute = require("./routes/userShopping");
 const ExpressError = require("./utils/ExpressError");
 const flash = require("connect-flash");
-const User = require("./models/user");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const { isLoggedIn } = require("./middleware");
 
 mongoose
   .connect("mongodb://localhost:27017/petit-bae")
@@ -63,7 +62,21 @@ app.use(async (req, res, next) => {
 });
 
 app.use("/products", productsRoute);
-app.use("/", userRoute);
+app.use("/", registerRoute);
+app.use("/user", userShoppingRoute);
+
+app.get("/", async (req, res) => {
+  const products = await Product.find({});
+  const category = await Category.find({});
+  const user = await User.findById(req.user).populate("shoppingCart");
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price * p.qty;
+    }
+  }
+  res.render("home", { category, products, user, sum });
+});
 
 app.get("/category/:id", async (req, res) => {
   const { id } = req.params;
@@ -81,61 +94,6 @@ app.get("/category/:id", async (req, res) => {
   // res.send(products);
   res.render("products/index", { category, products, user, sum });
 });
-
-app.post("/user", (req, res) => {
-  res.send(req.body);
-});
-app.get("/user/:id/checkout", async (req, res) => {
-  const { id } = req.user;
-  const user = await User.findById(req.user).populate("shoppingCart");
-  const shoppingCart = await ShoppingCart.find({ user: req.user });
-  const category = await Category.find({});
-  let sum = 0;
-  if (user) {
-    for (let p of user.shoppingCart) {
-      sum += p.price;
-    }
-  }
-  res.render("products/shoppingCart", { user, shoppingCart, category, sum });
-});
-
-app.post("/user/:id/shoppingcart/:productID", isLoggedIn, async (req, res) => {
-  const { id } = req.user;
-  const { productID } = req.params;
-  const user = await User.findById(id);
-  const product = await Product.findById(productID);
-  const { products, price, images } = product;
-  const { size, color, qty } = req.body;
-  const shoppingCart = await new ShoppingCart({
-    products,
-    price,
-    images,
-    size,
-    color,
-    qty,
-  });
-  shoppingCart.user = req.user;
-  user.shoppingCart.push(shoppingCart);
-  console.log(shoppingCart);
-  // await user.save();
-  // await shoppingCart.save();
-
-  // res.redirect(`/user/${id}/checkout`);
-});
-
-app.delete(
-  "/user/:id/shoppingcart/:shoppingcartID",
-  isLoggedIn,
-  async (req, res) => {
-    const { id, shoppingcartID } = req.params;
-    const user = await User.findByIdAndUpdate(id, {
-      $pull: { shoppingCart: shoppingcartID },
-    });
-    const shoppingCart = await ShoppingCart.findByIdAndDelete(shoppingcartID);
-    // const redirectUrl = req.session.returnTo || "/products";
-    // res.redirect(redirectUrl);
-  }
-);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));

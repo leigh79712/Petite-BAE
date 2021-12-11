@@ -54,6 +54,9 @@
         </div>
 
         <% } %>
+        
+        
+       
       </ul>
     </div>
   </div>
@@ -87,8 +90,16 @@
             <p class="sum"><%= sum %>€</p>
             <div class="checkout">
                <a class="btn btn-outline-primary btn-sm" href="/user/<%= currentUser.id %>/checkout">Check Out</a>
-            <% } %> 
-          
+            <% } else { %> 
+            <div>
+            <a href="/login"><img  class="empty-cart" src="/pic/empty-cart.png" alt=""></a>
+            <div>
+              <a class="nav-link text-center" >Please Sign up / Login</a>
+
+            </div>
+
+            </div>
+          <% } %> 
             </div>
            
           </li>     
