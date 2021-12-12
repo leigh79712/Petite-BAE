@@ -4,6 +4,7 @@ const path = require("path");
 const Category = require("./models/category");
 const Product = require("./models/products");
 const User = require("./models/user");
+
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
@@ -54,7 +55,18 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
 app.use(async (req, res, next) => {
+  const admin = await User.findById("61b671841c1f785e26fdf4f2");
+  if (req.user) {
+    const { id } = req.user;
+    if (admin._id == id) {
+      res.locals.admin = req.user;
+    } else {
+      res.locals.admin = null;
+    }
+  }
+
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");

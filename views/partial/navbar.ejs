@@ -31,17 +31,14 @@
       
     </div>
     <div class="d-none d-lg-block d-xl-block">
+
       <ul class="row">
         <div class="col">
           <li class="nav-item">
-            <a class="nav-link" href="/products">Products</a>
+            <a class="nav-link" href="/products">All Products</a>
           </li>
         </div>
-        <div class="col">
-          <li class="nav-item">
-            <a class="nav-link" href="/products/new">New</a>
-          </li>
-        </div>
+        
 
         <% for (let c of category){%>
         <div class="col">
@@ -63,13 +60,18 @@
 </nav>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
+        <% if(currentUser && !admin) { %> 
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Shopping Cart</h5>
+        <% } %> 
+         <% if(currentUser && admin) { %> 
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Check Order</h5>
+        <% } %> 
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item shopping-cart-show">
-            <% if(currentUser) { %> 
+            <% if(currentUser && !admin) { %> 
 
                 <% for(let i of user.shoppingCart){%>
                 <div class="shopping-cart-display mb-3 delete-div">
@@ -88,20 +90,29 @@
                <hr>
                  <h5>Total</h5>
             <p class="sum"><%= sum %>€</p>
+
             <div class="checkout">
                <a class="btn btn-outline-primary btn-sm" href="/user/<%= currentUser.id %>/checkout">Check Out</a>
-            <% } else { %> 
-            <div>
-            <a href="/login"><img  class="empty-cart" src="/pic/empty-cart.png" alt=""></a>
-            <div>
-              <a class="nav-link text-center" >Please Sign up / Login</a>
-
-            </div>
-
-            </div>
-          <% } %> 
-            </div>
+            <% } if(!currentUser) { %> 
+             <div>
+              <a href="/login"><img  class="empty-cart" src="/pic/empty-cart.png" alt=""></a>
+                <div>
+                  <a href="/login" class="nav-link text-center" >Please Sign up / Login</a>
+                </div>
+              </div>
+            </div><% } %> 
+           <% if(currentUser && admin){ %> 
+          <div class="col">
+              
+                <a class="nav-link" href="/admin/order">Order</a>
            
+            </div>
+            <div class="col">
+              
+                <a class="nav-link" href="/products/new">New</a>
+
+            </div>
+           <% } %> 
           </li>     
             </ul>
           </li>

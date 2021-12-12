@@ -1,6 +1,6 @@
 <% layout('/layout/boilerplate') -%>
 <link rel="stylesheet" href="/css/shoppingCart.css" />
-<script src="/javascript/shoppingCart.js"></script>
+<script src="/javascript/shoppingcart.js"></script>
 
 <div class="row">
   <div class="center offset-1">
@@ -30,8 +30,9 @@
         <div class="col-3">
           <form
             action="/user/<%= currentUser._id %>/shoppingcart/<%= s._id %>?_method=PUT"
+            data-action="/user/<%= currentUser._id %>/shoppingcart/<%= s._id %>?_method=DELETE"
             method="post"
-            class="form"
+            class="shoppingCart-form"
           >
             <div class="float-end my-3">
               <input

@@ -8,6 +8,7 @@ const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const { productSchema } = require("../Schema.js");
 const User = require("../models/user");
+const { isLoggedIn, checkAdmins } = require("../middleware");
 
 const validateProduct = (req, res, next) => {
   const { error } = productSchema.validate(req.body);
@@ -41,11 +42,18 @@ router.post("/", validateProduct, async (req, res) => {
   res.redirect(`/products/${product._id}`);
 });
 
-router.get("/new", async (req, res) => {
+router.get("/new", isLoggedIn, checkAdmins, async (req, res) => {
   const size = await Size.find({});
   const color = await Color.find({});
   const category = await Category.find({});
-  res.render("products/new", { size, color, category });
+  const user = await User.findById(req.user).populate("shoppingCart");
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price * p.qty;
+    }
+  }
+  res.render("products/new", { size, color, category, sum, user });
 });
 
 router.post("/color", async (req, res) => {

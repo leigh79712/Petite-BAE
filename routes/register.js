@@ -18,6 +18,10 @@ router.post("/signup", async (req, res, next) => {
     const { email, username, password, lastname, firstname } = req.body;
     const user = await new User({ email, username, lastname, firstname });
     const registeredUser = await User.register(user, password);
+    const admin = await User.findById("61b671841c1f785e26fdf4f2");
+    admin.user.push(user);
+    admin.save();
+
     req.login(registeredUser, (err) => {
       if (err) return next(err);
     });

@@ -1,7 +1,3 @@
-const form = document.querySelectorAll(".form");
-const showImg = document.querySelectorAll(".card");
-const count = document.querySelectorAll(".count");
-const edit = document.querySelectorAll(".edit");
 // const seeDetail = function () {
 //   showDetail.classList.toggle("hidden");
 // };
@@ -29,11 +25,7 @@ const edit = document.querySelectorAll(".edit");
 //     e.preventDefault();
 //   });
 // });
-edit.forEach((el) => {
-  console.log(el);
-  const count = el.parentElement.querySelector(".count");
-  console.log(count);
-});
+const showImg = document.querySelectorAll(".card");
 
 showImg.forEach((el) => {
   const showDetail = el.querySelector(".show-detail");
@@ -45,9 +37,13 @@ showImg.forEach((el) => {
   });
 });
 
+const deleteShoppingCart = (e) => {};
+
 window.onload = function () {
   const inc = document.querySelectorAll(".inc");
   const dec = document.querySelectorAll(".dec");
+  const form = document.querySelectorAll(".shoppingCart-form");
+
   inc.forEach((el) => {
     const count = el.nextElementSibling;
     el.addEventListener("click", function () {
@@ -60,5 +56,16 @@ window.onload = function () {
       if (count.value <= 0) return;
       count.value = parseInt(count.value) - 1;
     });
+  });
+  form.forEach((el) => {
+    const count = el.querySelector(".count");
+    const deleteForm = el.closest(".card");
+    if (count.value == 0) {
+      let response = fetch(`${el.dataset.action}`, {
+        method: "POST",
+        body: {},
+      });
+      deleteForm.remove();
+    }
   });
 };

@@ -106,7 +106,7 @@
           <h4><%= products.price %> €</h4>
         </div>
       </form>
-
+      <% if(currentUser && admin){ %>
       <a
         href="/products/<%= products._id %>/edit"
         class="btn btn-outline-secondary mb-3"
@@ -115,6 +115,7 @@
       <form action="/products/<%= products._id %>?_method=DELETE" method="post">
         <button class="btn btn-outline-danger" type="submit">Delete</button>
       </form>
+      <% } %>
     </div>
   </div>
   <div class="mb-5 text-center">
