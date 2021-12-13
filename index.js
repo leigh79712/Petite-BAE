@@ -90,6 +90,13 @@ app.get("/", async (req, res) => {
   res.render("home", { category, products, user, sum });
 });
 
+app.get("/admin/order", async (req, res) => {
+  const products = await Product.find({});
+  const category = await Category.find({});
+  const user = await User.findById(req.user).populate("shoppingCart");
+
+  res.render("admin/order", { products, category, user });
+});
 app.get("/category/:id", async (req, res) => {
   const { id } = req.params;
   const cate = await Category.find({ _id: id });
