@@ -3,12 +3,7 @@ const { Schema } = mongoose;
 
 const OrderSchema = new Schema([
   {
-    products: String,
-    price: Number,
-    images: String,
-    size: String,
-    color: String,
-    qty: Number,
+    newOrder: Array,
     user: {
       type: Schema.Types.ObjectId,
       res: "User",

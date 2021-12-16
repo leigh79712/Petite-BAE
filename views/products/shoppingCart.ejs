@@ -75,7 +75,7 @@
     <div class="row">
       <h5 class="col">Total</h5>
       <h4 class="col offset-8"><%= sum %></h4>
-      <form action="/products/success" method="post">
+      <form action="/user/<%= currentUser._id %>/order" method="post">
         <input
           class="btn btn-outline-secondary float-end me-5 mt-3"
           type="submit"
