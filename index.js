@@ -59,7 +59,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(async (req, res, next) => {
-  const admin = await User.findById("61b671841c1f785e26fdf4f2");
+  const admin = await User.findById("61be54aa7377e01ad3a79a68");
   if (req.user) {
     const { id } = req.user;
     if (admin._id == id) {
@@ -102,8 +102,11 @@ app.get("/admin/order", async (req, res) => {
 
 app.get("/user/:id/success", async (req, res) => {
   const { _id } = req.user;
-  const user = await User.findById(req.user).populate("shoppingCart");
+  const user = await User.findById(req.user)
+    .populate("shoppingCart")
+    .populate("order");
   const order = await Order.find({ user: req.user });
+
   const category = await Category.find({});
   let sum = 0;
   if (user) {
@@ -111,6 +114,7 @@ app.get("/user/:id/success", async (req, res) => {
       sum += p.price * p.qty;
     }
   }
+  console.log(user);
   res.render("products/success", { order, category, sum, user });
 });
 
@@ -136,6 +140,7 @@ app.post("/user/:id/order", async (req, res) => {
   order.user = req.user;
   await user.order.push(order);
   await ShoppingCart.deleteMany({ user: req.user });
+  await user.save();
   await order.save();
   res.redirect(`/user/${_id}/success`);
 });
