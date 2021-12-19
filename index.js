@@ -130,7 +130,7 @@ app.post("/user/:id/order", async (req, res) => {
     obj.images = shoppingcart[i].images;
     obj.size = shoppingcart[i].size;
     obj.color = shoppingcart[i].color;
-    obj.qyt = shoppingcart[i].qty;
+    obj.qty = shoppingcart[i].qty;
     newOrder.push(obj);
   }
   const order = await new Order({ newOrder: newOrder });
