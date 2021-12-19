@@ -7,5 +7,5 @@ module.exports.productSchema = Joi.object({
   size: Joi.required(),
   color: Joi.required(),
   category: Joi.required(),
-  images: Joi.required(),
+  deleteImage: Joi.array(),
 });

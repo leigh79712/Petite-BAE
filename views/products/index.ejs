@@ -16,7 +16,7 @@
          <% } %> 
          <div style="min-height: 218px;">
           <a href="/products/<%= product._id %>">
-           <img src="<%= product.images %>" class="card-img-top" alt=""  />
+           <img src="<%= product.images[0].url %>" class="card-img-top" alt=""  />
            </a>
         <div class="hidden show-detail text-center">
           <div class="mb-2">
@@ -73,7 +73,7 @@
               </button>
             </form>
             <a
-              href="/products/<%= products._id %>/edit"
+              href="/products/<%= product._id %>/edit"
               class="btn btn-outline-secondary btn-sm col-6"
               >Edit</a
             >

@@ -1,6 +1,6 @@
 const deleteForm = document.querySelectorAll(".delete-form");
 
-const deleteItem = (e) => {
+const deleteCart = (e) => {
   let response = fetch(`${e.target.action}`, {
     method: "POST",
     body: {},
@@ -10,7 +10,7 @@ const deleteItem = (e) => {
 deleteForm.forEach((el) => {
   el.addEventListener("submit", function (e) {
     const deleteDiv = e.target.closest(".delete-div");
-    deleteItem(e);
+    deleteCart(e);
     e.target.remove();
     deleteDiv.remove();
     e.preventDefault();

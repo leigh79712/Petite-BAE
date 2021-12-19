@@ -23,7 +23,16 @@ const addData = async () => {
       price: price,
       size: ["_XS", "_S", "_M", "_L"],
       color: ["_Black", "_White"],
-      images: "/pic/hat.png",
+      images: [
+        {
+          url: "https://res.cloudinary.com/leigh79712/image/upload/v1639932928/ShoppingApp/zukrrfetxsjnrj1gst2v.webp",
+          filename: "ShoppingApp/zukrrfetxsjnrj1gst2v",
+        },
+        {
+          url: "https://res.cloudinary.com/leigh79712/image/upload/v1639932928/ShoppingApp/w7x27g5cyhc9nodiexrg.png",
+          filename: "ShoppingApp/w7x27g5cyhc9nodiexrg",
+        },
+      ],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure fugiat odio dicta distinctio cumque quaerat consequuntur eveniet nulla soluta. Voluptate saepe quo nobis fugit rerum dolores eveniet expedita quae id?",
       category: ["New arrival", "In Stock"],

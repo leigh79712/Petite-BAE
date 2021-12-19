@@ -8,13 +8,11 @@
     <div class="col-md-6">
       <div id="images" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img
-              src="<%= products.images %>"
-              class="d-block w-100 rounded"
-              alt="..."
-            />
+          <% products.images.forEach((img,i) => { %>
+          <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+            <img src="<%= img.url %>" class="d-block w-100 rounded" alt="..." />
           </div>
+          <% }) %>
         </div>
         <% if(products.images.length > 1 ) { %>
         <button
@@ -154,7 +152,7 @@
         <div class="mb-3 col">
           <div class="card" style="width: 15rem">
             <a href="/products/<%= p._id %>">
-              <img src="<%= p.images %>" class="card-img-top" alt="" />
+              <img src="<%= p.images[0].url %>" class="card-img-top" alt="" />
             </a>
             <div class="hidden show-detail text-center">
               <div class="mb-2">
@@ -171,10 +169,10 @@
         </div>
         <% } %>
       </div>
-      <button class="slider__btn slider__btn--left btn-outline-secondary">
+      <button class="slider__btn slider__btn--left btn btn-outline-secondary">
         &larr;
       </button>
-      <button class="slider__btn slider__btn--right btn-outline-secondary">
+      <button class="slider__btn slider__btn--right btn btn-outline-secondary">
         &rarr;
       </button>
     </div>

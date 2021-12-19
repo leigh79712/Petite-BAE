@@ -10,21 +10,34 @@
 <link rel="stylesheet" href="/css/form.css" />
 
 <h1 class="text-center">Add New Product</h1>
-<div class="col-md-6 offset-md-3">
-  <form id="newProduct" class="form" action="/products/<%= products._id %>?_method=PUT" method="post">
-  <div class="mb-3">
+
+      <form id="newProduct" class="form" action="/products/<%= products._id %>?_method=PUT" method="post" enctype="multipart/form-data"></form>
+       <div class="row">
+
+       
+    <div class="col-md-6">
+      <% products.images.forEach(function(img,i) {%>
+    <img src="<%= img.thumbnail %>" class="img-thumbnail">
+    <div class="form-check-inline">
+      <input type="checkbox" id="image-<%=i%>" name="deleteImage[]" value="<%= img.filename %>">
+    </div>
+    <label for="image-<%=i%>"></label>
+     <% }) %> 
+    </div>
+  
+    <div class="col-md-6">
     <label class="form-lable" for="porducts">Products</label>
     <input form="newProduct" value="<%= products.products %>" class="form-control" type="text" name="products" />
-  </div>
+  
   <div class="mb-3">
     <label class="form-lable" for="price">Price</label>
     <input id="newProduct" value="<%= products.price %>"  class="form-control" type="number" name="price" />
   </div>
   <div class="mb-3">
-    <label class="form-lable" for="images">Images</label>
-    <input form="newProduct" value="<%= products.price %>" class="form-control" type="text" name="images" />
+    <label class="form-lable" for="images">Add Images</label>
+    <input form="newProduct" class="form-control" type="file" name="images" multiple />
   </div>
-
+  
   <!-- size -->
   <div class="mb-3">
     <label class="form-lable" for="size">Size</label>
@@ -38,7 +51,7 @@
           value="<%= s.otherSize %>"
           name="size"
           id="<%= s.otherSize + "_s" %>"
-         
+        checked
         />
         <label class="btn btn-outline-secondary" for="<%= s.otherSize + "_s" %>"><%= String(s.otherSize).toUpperCase().slice(1) %></label>
        <% } %> 
@@ -64,7 +77,7 @@
             value="<%= c.otherColor %>"
             name="color"
             id="<%= c.otherColor.replace(" ", "_")+"_c" %>"
-            
+            checked
           />
       <label class="btn btn-outline-secondary" 
       for="<%= c.otherColor.replace(" ", "_")+"_c" %>">
@@ -125,10 +138,9 @@
     />
   </div>
 </div>
-
+</div>
+</div>
 </form>
-
-
 <!-- Modal -->
 <div class="modal fade" id="sizeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

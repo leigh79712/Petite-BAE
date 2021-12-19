@@ -10,6 +10,10 @@ const { productSchema } = require("../Schema.js");
 const User = require("../models/user");
 const { isLoggedIn, checkAdmins } = require("../middleware");
 
+const multer = require("multer");
+const { storage, cloudinary } = require("../cloudinary");
+const upload = multer({ storage });
+
 const validateProduct = (req, res, next) => {
   const { error } = productSchema.validate(req.body);
   if (error) {
@@ -33,11 +37,15 @@ router.get("/", async (req, res, next) => {
   res.render("products/index", { user, products, category, sum });
 });
 
-router.post("/", validateProduct, async (req, res) => {
+router.post("/", upload.array("images"), validateProduct, async (req, res) => {
   // if (!req.body) throw new ExpressError("Invalid Product Data", 400);
   const product = await new Product(req.body);
-  console.log(req.body);
+  product.images = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
   product.save();
+  console.log(product);
   req.flash("success", "Successfully upload a product!");
   res.redirect(`/products/${product._id}`);
 });
@@ -57,13 +65,11 @@ router.get("/new", isLoggedIn, checkAdmins, async (req, res) => {
 });
 
 router.post("/color", async (req, res) => {
-  console.log(req.body);
   let c = await new Color(req.body);
   c.save();
 });
 
 router.post("/size", async (req, res) => {
-  console.log(req.body);
   let s = await new Size(req.body);
   s.save();
   // res.redirect("back");
@@ -85,7 +91,6 @@ router.delete(
   "/size/:id",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    console.log(id);
     await Size.findByIdAndDelete(id);
     // res.location("back");
   })
@@ -93,7 +98,7 @@ router.delete(
 
 router.delete("/category/:id", async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   await Category.findByIdAndDelete(id);
   // res.location("back");
 });
@@ -122,7 +127,7 @@ router.get("/:id", async (req, res) => {
     req.flash("error", "Cannot find that product!");
     return res.redirect("/products");
   }
-  console.log(user);
+
   res.render("products/show", {
     user,
     products,
@@ -138,16 +143,36 @@ router.delete("/:id", async (req, res) => {
   res.redirect("/products");
 });
 
-router.put("/:id", async (req, res) => {
-  const products = await Product.findByIdAndUpdate(req.params.id, {
-    ...req.body,
-  });
+router.put(
+  "/:id",
+  isLoggedIn,
+  upload.array("images"),
+  validateProduct,
+  async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findByIdAndUpdate(id, {
+      ...req.body,
+    });
+    const imgs = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+    product.images.push(...imgs);
+    await product.save();
+    if (req.body.deleteImage) {
+      for (let filename of req.body.deleteImage) {
+        await cloudinary.uploader.destroy(filename);
+      }
+      await product.updateOne({
+        $pull: { images: { filename: { $in: req.body.deleteImage } } },
+      });
+    }
 
-  await products.save();
-  req.flash("success", "Successfully edit a product!");
+    req.flash("success", "Successfully edit a product!");
 
-  res.redirect(`/products/${req.params.id}`);
-});
+    res.redirect(`/products/${req.params.id}`);
+  }
+);
 
 router.get("/:id/edit", async (req, res) => {
   const size = await Size.find({});
