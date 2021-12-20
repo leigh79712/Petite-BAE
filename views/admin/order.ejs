@@ -1,18 +1,34 @@
 <% layout('/layout/boilerplate') -%>
-<div class="card mb-3" style="max-width: 600px">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <h5 class="card-title">Card title</h5>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </p>
-        <p class="card-text">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </p>
+<div>
+  <div class="card">
+    <div class="row">
+      <div class="col">
+        <h5 class="card-title">Order</h5>
+      </div>
+      <div class="col">
+        <h5 class="card-title">Username</h5>
+      </div>
+      <div class="col">
+        <h5 class="card-title">E-mail</h5>
       </div>
     </div>
   </div>
 </div>
+<hr />
+<% for (let o of order){ %> 
+<div>
+  <div class="card mb-3">
+    <div class="row">
+      <div class="col">
+        <a href=""><h5 class="card-title"><%= o.id %></h5></a>
+      </div>
+      <div class="col">
+        <p class="card-title"><%= o.user.username %></h5>
+      </div>
+      <div class="col">
+        <h5 class="card-title"><%= o.user.email %></h5>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %> 

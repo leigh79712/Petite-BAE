@@ -75,7 +75,7 @@
 
                 <% for(let i of user.shoppingCart){%>
                 <div class="shopping-cart-display mb-3 delete-div">
-                 <img class="card-img" src="<%= i.images %>" class="img-fluid rounded-start" alt="...">
+                 <img class="card-img" src="<%= i.images[0].url %>" class="img-fluid rounded-start" alt="...">
                  <h5 class="shoppingCart-card-title"><%= i.products %></h5><br>
                   <div class="shoppingCart-card-text"><strong><%= i.price %>€</strong></div>
                   

@@ -1,39 +1,35 @@
 const appendHtml = document.getElementById("appendHtml");
 let html = "";
 let orderLength = newOrder.length - 1;
+let newOrderLength = newOrder[orderLength].newOrder.length - 1;
 
-for (let i = 0; i <= orderLength; i++) {
+for (let i = 0; i <= newOrderLength; i++) {
+  let order = newOrder[orderLength].newOrder[i];
   html += `<div class="card mb-3" style="max-width: 800px">
       <div class="row g-0">
         <div class="col-2">
           <img
             class="shoppingCart-card-img"
-            src="${newOrder[orderLength].newOrder[i].images}"
+            src="${order.images[0].url}"
             class="img-fluid rounded-start"
           />
         </div>
         <div class="col-7">
           <div class="card-body">
             <div class="mb-2">
-              <h5 class="card-title d-inline">${
-                newOrder[orderLength].newOrder[i].products
-              }</h5>
+              <h5 class="card-title d-inline">${order.products}</h5>
             </div>
           </div>
           <p>
-            <strong>Size : </strong> ${String(
-              newOrder[orderLength].newOrder[i].size
-            ).slice(1)}
-            <strong>Color : </strong> ${String(
-              newOrder[orderLength].newOrder[i].color
-            ).slice(1)}
+            <strong>Size : </strong> ${String(order.size).slice(1)}
+            <strong>Color : </strong> ${String(order.color).slice(1)}
           </p>
         </div>
         <div class="col-3">
         <p class="mt-5">
-        <strong>Price : ${newOrder[orderLength].newOrder[i].price}
+        <strong>Price : ${order.price}
             </strong>
-            <strong>Qty : ${newOrder[orderLength].newOrder[i].qty}
+            <strong>Qty : ${order.qty}
             </strong>
             </p>
         </div>

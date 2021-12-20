@@ -6,7 +6,7 @@ const OrderSchema = new Schema([
     newOrder: Array,
     user: {
       type: Schema.Types.ObjectId,
-      res: "User",
+      ref: "User",
     },
   },
 ]);

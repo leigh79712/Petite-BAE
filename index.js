@@ -16,6 +16,7 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const productsRoute = require("./routes/products");
 const registerRoute = require("./routes/register");
+const adminRoute = require("./routes/admin");
 const userShoppingRoute = require("./routes/userShopping");
 const ExpressError = require("./utils/ExpressError");
 const flash = require("connect-flash");
@@ -62,7 +63,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(async (req, res, next) => {
-  const admin = await User.findById("61be54aa7377e01ad3a79a68");
+  const admin = await User.findById("61c06aba0d697ccb8f3552da");
   if (req.user) {
     const { id } = req.user;
     if (admin._id == id) {
@@ -81,6 +82,7 @@ app.use(async (req, res, next) => {
 app.use("/products", productsRoute);
 app.use("/", registerRoute);
 app.use("/user", userShoppingRoute);
+app.use("/admin", adminRoute);
 
 app.get("/", async (req, res) => {
   const products = await Product.find({});
@@ -93,14 +95,6 @@ app.get("/", async (req, res) => {
     }
   }
   res.render("home", { category, products, user, sum });
-});
-
-app.get("/admin/order", async (req, res) => {
-  const products = await Product.find({});
-  const category = await Category.find({});
-  const user = await User.findById(req.user).populate("order");
-
-  res.render("admin/order", { products, category, user });
 });
 
 app.get("/user/:id/success", async (req, res) => {
@@ -117,7 +111,7 @@ app.get("/user/:id/success", async (req, res) => {
       sum += p.price * p.qty;
     }
   }
-  console.log(user);
+  console.log(order);
   res.render("products/success", { order, category, sum, user });
 });
 

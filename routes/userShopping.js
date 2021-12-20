@@ -17,6 +17,7 @@ router.get("/:id/checkout", async (req, res) => {
       sum += p.price * p.qty;
     }
   }
+
   res.render("products/shoppingCart", { user, shoppingCart, category, sum });
 });
 
@@ -25,6 +26,7 @@ router.post("/:id/shoppingcart/:productID", isLoggedIn, async (req, res) => {
   const { productID } = req.params;
   const user = await User.findById(id);
   const product = await Product.findById(productID);
+  console.log(product);
   const { products, price, images } = product;
   const { size, color, qty } = req.body;
   const shoppingCart = await new ShoppingCart({
@@ -50,7 +52,7 @@ router.put("/:id/shoppingcart/:productID", async (req, res) => {
     productID,
     req.body
   );
-  console.log(shoppingCart);
+
   shoppingCart.save();
   res.redirect(`/user/${id}/checkout`);
 });
