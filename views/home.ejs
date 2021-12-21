@@ -1,1 +1,104 @@
 <% layout('/layout/boilerplate') -%>
+<div id="TopControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <a href="<%= homepage.topImages_1.link %>"
+        ><img
+          src="<%= homepage.topImages_1.url %>"
+          class="d-block"
+          alt="<%= homepage.topImages_1.text %>"
+      /></a>
+      <a href="<%= homepage.topImages_1.link %>"
+        ><button class="btn"><%= homepage.topImages_1.text %></button></a
+      >
+    </div>
+    <div class="carousel-item">
+      <a href="<%= homepage.topImages_2.link %>"
+        ><img
+          src="<%= homepage.topImages_2.url %>"
+          class="d-block"
+          alt="<%= homepage.topImages_2.text %>"
+      /></a>
+      <a href="<%= homepage.topImages_2.link %>"
+        ><button class="btn"><%= homepage.topImages_2.text %></button></a
+      >
+    </div>
+    <div class="carousel-item">
+      <a href="<%= homepage.topImages_3.link %>"
+        ><img
+          src="<%= homepage.topImages_3.url %>"
+          class="d-block"
+          alt="<%= homepage.topImages_3.text %>"
+      /></a>
+      <a href="<%= homepage.topImages_3.link %>"
+        ><button class="btn"><%= homepage.topImages_3.text %></button></a
+      >
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="..." />
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleControls"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#TopControls"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div id="SecondControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <a href="<%= homepage.secondImage_1.link %>"
+        ><img
+          src="<%= homepage.secondImage_1.url %>"
+          class="d-block"
+          alt="<%= homepage.secondImage_1.text %>"
+      /></a>
+      <a href="<%= homepage.secondImage_1.link %>"
+        ><button class="btn"><%= homepage.secondImage_1.text %></button></a
+      >
+    </div>
+    <div class="carousel-item">
+      <a href="<%= homepage.secondImage_2.link %>"
+        ><img
+          src="<%= homepage.secondImage_2.url %>"
+          class="d-block"
+          alt="<%= homepage.secondImage_2.text %>"
+      /></a>
+      <a href="<%= homepage.secondImage_2.link %>"
+        ><button class="btn"><%= homepage.secondImage_2.text %></button></a
+      >
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleControls"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#secondControls"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>

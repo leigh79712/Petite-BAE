@@ -1,8 +1,10 @@
 const appendHtml = document.getElementById("appendHtml");
 let html = "";
+let orderLength = newOrder.length - 1;
+let newOrderLength = newOrder[orderLength].newOrder.length;
 
-for (let i = 0; i < orderDetail.newOrder.length; i++) {
-  let order = orderDetail.newOrder[i];
+for (let i = 0; i < newOrderLength; i++) {
+  let order = newOrder[orderLength].newOrder[i];
   html += `<div class="card mb-3" style="max-width: 800px">
       <div class="row g-0">
         <div class="col-2">
@@ -33,6 +35,7 @@ for (let i = 0; i < orderDetail.newOrder.length; i++) {
         </div>
         </div>
         </div>
+
 `;
 }
 

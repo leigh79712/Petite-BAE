@@ -1,0 +1,43 @@
+<% layout('/layout/boilerplate') -%>
+<link rel="stylesheet" href="/css/shoppingCart.css" />
+<script>
+  const orderDetail = <%- JSON.stringify(order) %>
+</script>
+<script defer src="/javascript/order.js"></script>
+<div class="mb-3">
+  <div class="row">
+    <div class="col-3"><h5>Order</h5></div>
+    <div class="col">
+      <h6>Username</h6>
+    </div>
+    <div class="col">
+      <h6>First Name</h6>
+    </div>
+    <div class="col">
+      <h6>Last Name</h6>
+    </div>
+    <div class="col">
+      <h6>E-mail</h6>
+    </div>
+  </div>
+</div>
+<div class="mb-3">
+  <div class="row">
+    <div class="col"><h6><%= order.id%></h6></div>
+    <div class="col">
+      <h6><%= order.user.username %></h6>
+    </div>
+    <div class="col">
+      <h6><%= order.user.firstname %></h6>
+    </div>
+    <div class="col">
+      <h6><%= order.user.lastname %></h6>
+    </div>
+    <div class="col">
+      <h6><%= order.user.email %></h6>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div id="appendHtml" class="center offset-1"></div>
+</div>

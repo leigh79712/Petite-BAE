@@ -7,8 +7,7 @@ const path = require("path");
 const Category = require("./models/category");
 const Product = require("./models/products");
 const User = require("./models/user");
-const ShoppingCart = require("./models/shoppingcart");
-const Order = require("./models/order");
+const HomePage = require("./models/homepage");
 
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
@@ -87,6 +86,7 @@ app.use("/admin", adminRoute);
 app.get("/", async (req, res) => {
   const products = await Product.find({});
   const category = await Category.find({});
+  const homepage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
   const user = await User.findById(req.user).populate("shoppingCart");
   let sum = 0;
   if (user) {
@@ -94,52 +94,7 @@ app.get("/", async (req, res) => {
       sum += p.price * p.qty;
     }
   }
-  res.render("home", { category, products, user, sum });
-});
-
-app.get("/user/:id/success", async (req, res) => {
-  const { _id } = req.user;
-  const user = await User.findById(req.user)
-    .populate("shoppingCart")
-    .populate("order");
-  const order = await Order.find({ user: req.user });
-
-  const category = await Category.find({});
-  let sum = 0;
-  if (user) {
-    for (let p of user.shoppingCart) {
-      sum += p.price * p.qty;
-    }
-  }
-  console.log(order);
-  res.render("products/success", { order, category, sum, user });
-});
-
-app.post("/user/:id/order", async (req, res) => {
-  const { _id } = req.user;
-  const user = await User.findById(_id);
-  const shoppingcart = await ShoppingCart.find({ user: req.user });
-  const newOrder = [];
-  for (let i = 0; i < shoppingcart.length; i++) {
-    let obj = {};
-    obj.products = shoppingcart[i].products;
-    obj.price = shoppingcart[i].price;
-    obj.images = shoppingcart[i].images;
-    obj.size = shoppingcart[i].size;
-    obj.color = shoppingcart[i].color;
-    obj.qty = shoppingcart[i].qty;
-    newOrder.push(obj);
-  }
-  const order = await new Order({ newOrder: newOrder });
-  const updateUser = await User.findByIdAndUpdate(_id, {
-    $pullAll: { shoppingCart: shoppingcart },
-  });
-  order.user = req.user;
-  await user.order.push(order);
-  await ShoppingCart.deleteMany({ user: req.user });
-  await user.save();
-  await order.save();
-  res.redirect(`/user/${_id}/success`);
+  res.render("home", { category, products, user, sum, homepage });
 });
 
 app.get("/category/:id", async (req, res) => {
