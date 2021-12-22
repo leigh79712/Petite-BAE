@@ -97,7 +97,7 @@ app.get("/", async (req, res) => {
   res.render("home", { category, products, user, sum, homepage });
 });
 
-app.get("/category/:id", async (req, res) => {
+app.get("/:id", async (req, res) => {
   const { id } = req.params;
   const cate = await Category.find({ _id: id });
   const [{ otherCategory }] = cate;

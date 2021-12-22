@@ -1,0 +1,40 @@
+.carousel-item a img {
+  width: 80%;
+  height: 80%;
+}
+.show-detail {
+  position: absolute;
+  z-index: 1;
+  top: 14em;
+  background-color: white;
+  width: 100%;
+  transition: 0.5s;
+}
+.price {
+  font-size: 0.6em;
+  float: right;
+}
+.subscribe {
+  position: relative;
+  height: 70vh;
+  width: 100%;
+  overflow: hidden;
+}
+#bg {
+  height: 60vh;
+  width: 100%;
+  background-image: url("/pic/tekstura-fon-belyi-listia-pattern-background.jpeg");
+  background-size: 300px;
+  background-repeat: repeat;
+  position: relative;
+  top: 0;
+  background-attachment: local;
+  opacity: 0.2;
+  z-index: 0;
+}
+.email {
+  position: relative;
+  top: 15em;
+  z-index: 1;
+  width: 50%;
+}
