@@ -1,3 +1,6 @@
+const ExpressError = require("./utils/ExpressError");
+const { productSchema } = require("./Schema.js");
+
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.returnTo = req.originalUrl;
@@ -19,6 +22,16 @@ module.exports.checkAdmins = async (req, res, next) => {
     }
     if (!req.user || id == admin._id) req.flash("error", "You are not admins!");
     res.redirect("/products");
+    next();
+  }
+};
+
+module.exports.validateProduct = (req, res, next) => {
+  const { error } = productSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
     next();
   }
 };
