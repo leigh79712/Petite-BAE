@@ -2,6 +2,7 @@ const Category = require("../models/category");
 const User = require("../models/user");
 const Product = require("../models/products");
 const ShoppingCart = require("../models/shoppingcart");
+const Order = require("../models/order");
 
 module.exports.renderCheckOutPage = async (req, res) => {
   const { id } = req.user;
@@ -26,13 +27,8 @@ module.exports.renderSuccessOrderPage = async (req, res) => {
   const order = await Order.find({ user: req.user });
 
   const category = await Category.find({});
-  let sum = 0;
-  if (user) {
-    for (let p of user.shoppingCart) {
-      sum += p.price * p.qty;
-    }
-  }
-  res.render("products/success", { order, category, sum, user });
+
+  res.render("products/success", { order, category, user });
 };
 
 module.exports.getNewOrder = async (req, res) => {

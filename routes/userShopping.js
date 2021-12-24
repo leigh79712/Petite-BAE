@@ -6,13 +6,9 @@ const userShopping = require("../control/userShopping");
 
 router.get("/:id/checkout", isLoggedIn, userShopping.renderCheckOutPage);
 
-router.get(
-  "/user/:id/success",
-  isLoggedIn,
-  userShopping.renderSuccessOrderPage
-);
+router.get("/:id/success", isLoggedIn, userShopping.renderSuccessOrderPage);
 
-router.post("/user/:id/order", isLoggedIn, userShopping.getNewOrder);
+router.post("/:id/order", isLoggedIn, userShopping.getNewOrder);
 
 router
   .route("/:id/shoppingcart/:productID")

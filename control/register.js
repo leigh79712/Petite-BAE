@@ -16,7 +16,8 @@ module.exports.registerNewUser = async (req, res, next) => {
     const { email, username, password, lastname, firstname } = req.body;
     const user = await new User({ email, username, lastname, firstname });
     const registeredUser = await User.register(user, password);
-    const admin = await User.findById("61c06aba0d697ccb8f3552da");
+    const admin = await User.findById("61c5ad954d66c3a3b954f03e");
+    // const admin = await User.findById("61c06aba0d697ccb8f3552da");
     admin.user.push(user);
     admin.save();
 

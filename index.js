@@ -5,10 +5,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const Category = require("./models/category");
-const Product = require("./models/products");
 const User = require("./models/user");
-const HomePage = require("./models/homepage");
-
+const mongoSanitize = require("express-mongo-sanitize");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
@@ -21,9 +19,14 @@ const ExpressError = require("./utils/ExpressError");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-
+const { renderHomePage, renderCategoryPage } = require("./control/homepage");
+const helmet = require("helmet");
+const MongoStore = require("connect-mongo");
+const dbUrl = process.env.mongo_Url;
+//"mongodb://localhost:27017/petit-bae"
+//
 mongoose
-  .connect("mongodb://localhost:27017/petit-bae")
+  .connect(dbUrl)
   .then(() => {
     console.log("Connection open");
   })
@@ -37,17 +40,30 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.engine("ejs", ejsMate);
 
+app.use(mongoSanitize());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(flash());
 
+const secret = process.env.SESSION_SECRET || "thisshouldbeabettersecret!";
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+});
+store.on("error", function (e) {
+  console.log("SESSION STORE ERROR", e);
+});
 const sessionConfig = {
-  secret: "thisshouldbeabettersecet!",
+  store,
+  secret,
+  name: "petit-bae.",
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
+    // secure:ture,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
@@ -61,8 +77,16 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(helmet({ contentSecurityPolicy: false }));
+
 app.use(async (req, res, next) => {
-  const admin = await User.findById("61c06aba0d697ccb8f3552da");
+  res.locals.currentUser = req.user;
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+
+  const admin = await User.findById("61c5ad954d66c3a3b954f03e");
+  // const admin = await User.findById("61c06aba0d697ccb8f3552da");
+
   if (req.user) {
     const { id } = req.user;
     if (admin._id == id) {
@@ -71,10 +95,6 @@ app.use(async (req, res, next) => {
       res.locals.admin = null;
     }
   }
-
-  res.locals.currentUser = req.user;
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
   next();
 });
 
@@ -82,37 +102,8 @@ app.use("/products", productsRoute);
 app.use("/", registerRoute);
 app.use("/user", userShoppingRoute);
 app.use("/admin", adminRoute);
-
-app.get("/", async (req, res) => {
-  const products = await Product.find({});
-  const category = await Category.find({});
-  const homepage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
-  const user = await User.findById(req.user).populate("shoppingCart");
-  let sum = 0;
-  if (user) {
-    for (let p of user.shoppingCart) {
-      sum += p.price * p.qty;
-    }
-  }
-  res.render("home", { category, products, user, sum, homepage });
-});
-
-app.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const cate = await Category.find({ _id: id });
-  const [{ otherCategory }] = cate;
-  const category = await Category.find({});
-  const products = await Product.find({ category: otherCategory });
-  const user = await User.findById(req.user).populate("shoppingCart");
-  let sum = 0;
-  if (user) {
-    for (let p of user.shoppingCart) {
-      sum += p.price;
-    }
-  }
-  // res.send(products);
-  res.render("products/index", { category, products, user, sum });
-});
+app.get("/", renderHomePage);
+app.get("/:id", renderCategoryPage);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));

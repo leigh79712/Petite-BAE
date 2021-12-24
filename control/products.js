@@ -5,6 +5,7 @@ const User = require("../models/user");
 const Size = require("../models/size");
 const catchAsync = require("../utils/catchAsync");
 const { cloudinary } = require("../cloudinary");
+
 const recommendProducts = [];
 const randomProducts = async function (times) {
   const allProducts = await Product.find({});

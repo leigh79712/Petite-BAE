@@ -13,7 +13,9 @@ module.exports.isLoggedIn = (req, res, next) => {
 const User = require("./models/user");
 
 module.exports.checkAdmins = async (req, res, next) => {
-  const admin = await User.findById("61c06aba0d697ccb8f3552da");
+  const admin = await User.findById("61c5ad954d66c3a3b954f03e");
+  // const admin = await User.findById("61c06aba0d697ccb8f3552da");
+
   if (req.user) {
     const { id } = req.user;
     if (id == admin._id) {
