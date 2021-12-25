@@ -14,7 +14,6 @@ module.exports.renderOrderDetailPage = async (req, res) => {
   const { id } = req.params;
   const category = await Category.find({});
   const order = await Order.findById(id).populate("user");
-  console.log(order);
   res.render("admin/detail", { category, order });
 };
 
@@ -96,7 +95,6 @@ module.exports.editImg_1 = async (req, res) => {
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
       await cloudinary.uploader.destroy(filename);
-      console.log(filename);
     }
     await homePage.updateOne({
       $pull: { images: { filename: { $in: req.body.deleteImage } } },
@@ -122,7 +120,6 @@ module.exports.editImg_2 = async (req, res) => {
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
       await cloudinary.uploader.destroy(filename);
-      console.log(filename);
     }
     await homePage.updateOne({
       $pull: { images: { filename: { $in: req.body.deleteImage } } },
@@ -147,7 +144,6 @@ module.exports.editImg_3 = async (req, res) => {
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
       await cloudinary.uploader.destroy(filename);
-      console.log(filename);
     }
     await homePage.updateOne({
       $pull: { images: { filename: { $in: req.body.deleteImage } } },
@@ -171,7 +167,6 @@ module.exports.editSecondImg_1 = async (req, res) => {
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
       await cloudinary.uploader.destroy(filename);
-      console.log(filename);
     }
     await homePage.updateOne({
       $pull: { images: { filename: { $in: req.body.deleteImage } } },
@@ -195,7 +190,6 @@ module.exports.editSecondImg_2 = async (req, res) => {
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
       await cloudinary.uploader.destroy(filename);
-      console.log(filename);
     }
     await homePage.updateOne({
       $pull: { images: { filename: { $in: req.body.deleteImage } } },

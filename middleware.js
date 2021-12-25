@@ -19,7 +19,6 @@ module.exports.checkAdmins = async (req, res, next) => {
   if (req.user) {
     const { id } = req.user;
     if (id == admin._id) {
-      console.log(id);
       return next();
     }
     if (!req.user || id == admin._id) req.flash("error", "You are not admins!");

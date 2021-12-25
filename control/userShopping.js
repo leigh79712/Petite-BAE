@@ -20,15 +20,22 @@ module.exports.renderCheckOutPage = async (req, res) => {
 };
 
 module.exports.renderSuccessOrderPage = async (req, res) => {
-  const { _id } = req.user;
+  const { _id } = req.params;
   const user = await User.findById(req.user)
     .populate("shoppingCart")
     .populate("order");
   const order = await Order.find({ user: req.user });
+  const shoppingCart = await ShoppingCart.find({ user: req.user });
 
   const category = await Category.find({});
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price * p.qty;
+    }
+  }
 
-  res.render("products/success", { order, category, user });
+  res.render("products/success", { shoppingCart, order, category, user, sum });
 };
 
 module.exports.getNewOrder = async (req, res) => {
@@ -46,7 +53,11 @@ module.exports.getNewOrder = async (req, res) => {
     obj.qty = shoppingcart[i].qty;
     newOrder.push(obj);
   }
-  const order = await new Order({ newOrder: newOrder });
+  const order = await new Order({
+    newOrder: newOrder,
+    shipping: false,
+    date: new Date().toString(),
+  });
   const updateUser = await User.findByIdAndUpdate(_id, {
     $pullAll: { shoppingCart: shoppingcart },
   });
@@ -63,7 +74,7 @@ module.exports.addItemToShoppingCart = async (req, res) => {
   const { productID } = req.params;
   const user = await User.findById(id);
   const product = await Product.findById(productID);
-  console.log(product);
+
   const { products, price, images } = product;
   const { size, color, qty } = req.body;
   const shoppingCart = await new ShoppingCart({

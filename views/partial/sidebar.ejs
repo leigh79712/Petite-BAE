@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="/css/sidebar.css" />
 
-<div class="col-2">
+<div class="d-none d-md-block col-md-2 sidenav">
   <ul class="nav flex-column side-col">
     <% if(currentUser && admin){ %> <% for(let i =1 ; i<=5;i++){ %>
     <div class="col">
       <li class="nav-item">
         <a class="nav-link" href="/admin/edithomepage_<%=i%>"
-          >Edit Home Page IMG-<%=i%></a
+          >Home Page IMG-<%=i%></a
         >
       </li>
     </div>

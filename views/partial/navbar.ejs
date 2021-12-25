@@ -1,26 +1,27 @@
 <link rel="stylesheet" href="/css/navbar.css" />
 
-
 <nav class="nav-top">
   <div class="container">
-    
     <div class="logo m-2">
       <a href="/"><img class="logo-img" src="/pic/logo.png" alt="" /></a>
     </div>
     <div>
-      <% if(currentUser){ %> 
-      <div><span>Hi, <%= currentUser.username %> </span></div>
-      <% } %> 
-      <% if(!currentUser){ %>
-        <a href="/login"><img class="login" src="/pic/account.png" alt="" /></a> 
-         <a href="/signup"><img class="signup" src="/pic/add-user.png" alt=""/></a>
-     <% } %> 
-      
-      <% if(currentUser){ %> 
-      <a href="/logout"
-        ><img class="logout" src="/pic/logout.png" alt=""
+      <% if(currentUser && !admin){ %>
+      <div>
+        <span>Hi, <%= currentUser.username %> </span>
+        <a href="/user/<%= currentUser._id%>/mypage"
+          ><button class="btn btn-sm btn-outline-secondary">My page</button></a
+        >
+      </div>
+
+      <% } %> <% if(!currentUser){ %>
+      <a href="/login"><img class="login" src="/pic/account.png" alt="" /></a>
+      <a href="/signup"
+        ><img class="signup" src="/pic/add-user.png" alt=""
       /></a>
-      <% } %> 
+      <% } %> <% if(currentUser){ %>
+      <a href="/logout"><img class="logout" src="/pic/logout.png" alt="" /></a>
+      <% } %>
       <a
         class="btn"
         data-bs-toggle="offcanvas"
@@ -28,19 +29,16 @@
         aria-controls="offcanvasNavbar"
         ><img class="shopping-bag" src="/pic/shopping-cart.png" alt=""
       /></a>
-      
     </div>
     <div class="d-none d-lg-block d-xl-block">
-
       <ul class="row">
         <div class="col">
           <li class="nav-item">
             <a class="nav-link" href="/products">All Products</a>
           </li>
         </div>
-        
 
-        <% for (let c of category){%>
+        <% for (let c of category){ %>
         <div class="col">
           <li class="nav-item">
             <a class="nav-link" href="/<%= c._id %>"
@@ -51,83 +49,102 @@
         </div>
 
         <% } %>
-        
-        
-       
       </ul>
     </div>
   </div>
-</nav>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
-        <% if(currentUser && !admin) { %> 
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Shopping Cart</h5>
-        <% } %> 
-         <% if(currentUser && admin) { %> 
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Check & Edit</h5>
-        <% } %> 
+        <% if(currentUser && !admin) { %>
+    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Shopping Cart</h5>
+    <% } %> <% if(currentUser && admin) { %>
+    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Check & Edit</h5>
+    <% } %>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item shopping-cart-show">
-            <% if(currentUser && !admin) { %> 
-
-                <% for(let i of user.shoppingCart){%>
-                <div class="shopping-cart-display mb-3 delete-div">
-                 <img class="card-img" src="<%= i.images[0].url %>" class="img-fluid rounded-start" alt="...">
-                 <h5 class="shoppingCart-card-title"><%= i.products %></h5><br>
-                  <div class="shoppingCart-card-text"><strong><%= i.price %>€</strong></div>
-                  
-                    <div class="shoppingCart-card-text"><small class="text-muted"><%= i.size.slice(1) %>  <%= i.color.toUpperCase().slice(1,2) + i.color.slice(2) %></small></div>
-                    <form class="delete-form" action="/user/<%= currentUser.id %>/shoppingcart/<%= i._id %>?_method=DELETE" method="post">
-                     <input class="btn btn-outline-danger float-end" type="submit" value="&times;">
-                    </form>
+          <% if(currentUser && !admin) { %>
+            <% for(let i of user.shoppingCart){ %>
+          <div class="shopping-cart-display mb-3 delete-div">
+              <img
+                class="card-img"
+                src="<%= i.images[0].url %>"
+                class="img-fluid rounded-start"
+                alt="..."
+              />
+              <h5 class="shoppingCart-card-title"><%= i.products %></h5>
+              <br />
+              <div class="shoppingCart-card-text">
+                <strong><%= i.price %>€</strong>
               </div>
-           
-               <%} %> 
-               
-               <hr>
-                 <h5>Total</h5>
-            <p class="sum"><%= sum %>€</p>
+
+              <div class="shoppingCart-card-text">
+                <small class="text-muted"
+                  ><%= i.size.slice(1) %> <%= i.color.toUpperCase().slice(1,2) +
+                  i.color.slice(2) %></small
+                >
+              </div>
+              <form
+                class="delete-form"
+                action="/user/<%= currentUser.id %>/shoppingcart/<%= i._id %>?_method=DELETE"
+                method="post"
+              >
+                <input
+                  class="btn btn-outline-danger float-end"
+                  type="submit"
+                  value="&times;"
+                />
+              </form>
+        </div>
+            <% } %> 
+             <hr />
+
+             <h5>Total</h5>
+
+             <p class="sum"><%= sum %>€</p>
 
             <div class="checkout">
-               <a class="btn btn-outline-primary btn-sm" href="/user/<%= currentUser.id %>/checkout">Check Out</a>
-            <% } if(!currentUser) { %> 
-             <div>
-              <a href="/login"><img  class="empty-cart" src="/pic/empty-cart.png" alt=""></a>
-                <div>
-                  <a href="/login" class="nav-link text-center" >Please Sign up / Login</a>
-                </div>
-              </div>
-            </div><% } %> 
-           <% if(currentUser && admin){ %> 
-          <div class="col">
-              
-                <a class="nav-link" href="/admin/order">Order</a>
-           
+          <a
+            class="btn btn-outline-primary btn-sm"
+            href="/user/<%= currentUser.id %>/checkout"
+            >Check Out</a
+          >
+          </div>
+
+          <% } %> 
+        </ul>
+        <%  if(!currentUser) { %>
+       
+            <a href="/login"
+              ><img class="empty-cart" src="/pic/empty-cart.png" alt=""
+            /></a>
+            <div>
+              <a href="/login" class="nav-link text-center"
+                >Please Sign up / Login</a
+              >
+            </div>
+         <% } %> 
+         <% if(currentUser && admin){ %>
+            <div class="col">
+              <a class="nav-link" href="/admin/order">Order</a>
             </div>
             <div class="col">
-              
-                <a class="nav-link" href="/products/new">New</a>
-
+              <a class="nav-link" href="/products/new">New</a>
             </div>
             <% for(let i =1 ; i<=5;i++){ %>
             <div class="col">
-            
               <a class="nav-link" href="/admin/edithomepage_<%=i%>"
                 >Edit Home Page IMG-<%=i%></a
               >
-           
-            
-           </div>
-          <% } %> 
-           <% } %> 
-          </li>     
-            </ul>
-          </li>
-        </ul>
-        
+            </div>
+        <% } %> <% } %>
+        </div>
+       
       </div>
     </div>
   </div>
+</nav>
+
+    
+
+   

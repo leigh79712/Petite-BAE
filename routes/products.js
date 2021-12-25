@@ -12,7 +12,7 @@ router
   .post(upload.array("images"), validateProduct, products.makeNewProducts);
 
 router.get("/editCategory", products.renderEditCategory);
-router.post("/newCategory", products.newCategory);
+router.post("/newCategory", isLoggedIn, checkAdmins, products.newCategory);
 router.get("/new", isLoggedIn, checkAdmins, products.renderNewProductPage);
 router.post("/color", isLoggedIn, checkAdmins, products.editColor);
 router.post("/size", isLoggedIn, checkAdmins, products.editSize);
