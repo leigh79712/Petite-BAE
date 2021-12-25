@@ -1,0 +1,35 @@
+<% layout('/layout/boilerplate') -%>
+
+
+<div class="card offset-4 p-3">
+<% for (let cate of category){ %> 
+<form class="deleteform" data-name="<%= cate.otherCategory.replace(" ", "_")+"_c" %>" action="/products/category/<%= cate._id %>?_method=PUT" method="post">
+ <div class="input-group mb-3 ">
+
+         
+        <input
+          type="text"
+          class="form-control"
+          value="<%= cate.otherCategory[1].toUpperCase() + cate.otherCategory.slice(2) %>"
+          name="category"
+          id="<%= cate.otherCategory %>"
+        />
+
+        <button class="btn btn-outline-primary d-inline">Edit</button>
+        </form>
+
+        <form class="deleteform" data-name="<%= cate.otherCategory.replace(" ", "_")+"_c" %>" action="/products/category/<%= cate._id %>?_method=DELETE" method="post">
+        <button class="btn btn-danger d-inline">&times;</button>
+        </form>
+</div>
+       <% } %> 
+
+        <form action="/products/newCategory" method="post">
+          <label class="form-lable" for="category">Other</label>
+          <div class="mb-3">
+            <input type="text" class="form-control category-input" name="otherCategory" required />
+          </div>
+            <button type="submit" class="btn btn-outline-primary btn-addItem">Save</button>
+    </form>
+</div>
+ 

@@ -16,6 +16,28 @@ const randomProducts = async function (times) {
 };
 randomProducts(9);
 
+module.exports.renderEditCategory = async (req, res) => {
+  const category = await Category.find({});
+  res.render("admin/category", { category });
+};
+module.exports.putEditCategory = async (req, res) => {
+  const { id } = req.params;
+  const { category } = req.body;
+  const updateCategory = await Category.findByIdAndUpdate(id, {
+    otherCategory: "_" + category.toLowerCase(),
+  });
+  res.redirect("/products/editCategory");
+};
+
+module.exports.newCategory = async (req, res) => {
+  const { otherCategory } = req.body;
+  const updateCategory = await new Category({
+    otherCategory: "_" + otherCategory.toLowerCase(),
+  });
+  updateCategory.save();
+  res.redirect("/products/editCategory");
+};
+
 module.exports.renderIndexPage = async (req, res, next) => {
   const products = await Product.find({});
   const category = await Category.find({});
@@ -83,6 +105,7 @@ module.exports.deleteSize = catchAsync(async (req, res) => {
 module.exports.deleteCategory = async (req, res) => {
   const { id } = req.params;
   await Category.findByIdAndDelete(id);
+  res.redirect("/products/editCategory");
 };
 
 module.exports.renderShowPage = async (req, res) => {

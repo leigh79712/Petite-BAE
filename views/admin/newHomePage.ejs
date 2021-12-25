@@ -1,0 +1,80 @@
+<% layout('/layout/boilerplate') -%>
+
+
+
+<h1 class="text-center mb-5">Edit Home Page</h1>
+
+  <form
+    class="form"
+    action="/admin/edithomepage"
+    method="post"
+    enctype="multipart/form-data"
+  >
+  <div class="row">
+    <div class="col-md-6">
+      <img src="<%= img.thumbnail %>" class="img-thumbnail" />
+      <div class="form-check-inline">
+        <input
+          type="checkbox"
+          id="image-1"
+          name="deleteImage[]"
+          value="<%= img.filename %>"
+
+        />
+        <label for="image-1"></label>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label class="form-lable" for="text">Button Text</label>
+        <input
+          class="form-control"
+          type="text"
+          name="text"
+          value="<%= img.text %>"
+        />
+      </div>
+      <div class="mb-3">
+    <label class="form-lable" for="category">Category</label>
+    <div class="category">
+     <% for (let cate of category){ %> 
+      <input
+            type="radio"
+            class="btn-check category-checkbox"
+            value="<%= cate._id%>"
+            name="link"
+            id="<%= cate.otherCategory.replace(" ", "_")+"_c" %>"
+          />
+      <label class="btn btn-outline-secondary" 
+      for="<%= cate.otherCategory.replace(" ", "_")+"_c" %>">
+      <%= cate.otherCategory[1].toUpperCase() + cate.otherCategory.slice(2) %></label>
+      <% } %> 
+      <input
+            type="radio"
+            class="btn-check category-checkbox"
+            value="signup"
+            name="link"
+            id="signup"
+            
+          />
+      <label class="btn btn-outline-secondary" 
+      for="signup">
+      Sign up</label>
+      <div class="category-invalid hidden">
+        Please choose at least one category
+      </div>
+    </div>
+    
+  </div>
+      <div class="mb-3">
+        <label class="form-lable" for="<%= name %>">Upload Image</label>
+        <input class="form-control" type="file" name="<%= name %>" />
+      </div>
+      <div class="d-grid gap-2 col-md-6 offset-md-3 max-auto">
+        <input class="btn btn-outline-secondary" type="submit" value="Submit" />
+      </div>
+    </div>
+  </form>
+</div>
+<a href="/products">Back</a>

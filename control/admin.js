@@ -20,7 +20,7 @@ module.exports.renderOrderDetailPage = async (req, res) => {
 
 module.exports.renderEditImg_1 = async (req, res) => {
   const category = await Category.find({});
-  const homepage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homepage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
   const img = homepage.topImages_1;
   const url = "edithomepage_1";
   const name = "topImages_1";
@@ -29,7 +29,7 @@ module.exports.renderEditImg_1 = async (req, res) => {
 
 module.exports.renderEditImg_2 = async (req, res) => {
   const category = await Category.find({});
-  const homepage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homepage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
   const img = homepage.topImages_2;
   const url = "edithomepage_2";
   const name = "topImages_2";
@@ -38,15 +38,15 @@ module.exports.renderEditImg_2 = async (req, res) => {
 
 module.exports.renderEditImg_3 = async (req, res) => {
   const category = await Category.find({});
-  const homepage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
-  const img = homepage.topImages_1;
+  const homepage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
+  const img = homepage.topImages_3;
   const url = "edithomepage_3";
   const name = "topImages_3";
   res.render("admin/editHomePage", { category, homepage, img, url, name });
 };
 module.exports.renderEditImg_4 = async (req, res) => {
   const category = await Category.find({});
-  const homepage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homepage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
   const img = homepage.secondImage_1;
   const url = "edithomepage_4";
   const name = "secondImage_1";
@@ -55,33 +55,37 @@ module.exports.renderEditImg_4 = async (req, res) => {
 
 module.exports.renderEditImg_5 = async (req, res) => {
   const category = await Category.find({});
-  const homepage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homepage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
   const img = homepage.secondImage_2;
   const url = "edithomepage_5";
   const name = "secondImage_2";
   res.render("admin/editHomePage", { category, homepage, img, url, name });
 };
+// module.exports.renderHomePage = async (req, res) => {
+//   const category = await Category.find({});
 
-module.exports.postNewEditImg = async (req, res) => {
-  const homePage = await new HomePage();
+//   res.render("admin/newHomePage", { category });
+// };
 
-  const { path, filename } = req.file;
-  homePage.topImages_1 = {
-    url: path,
-    filename: filename,
-    text: req.body.text,
-    link: req.body.link,
-  };
+// module.exports.postNewEditImg = async (req, res) => {
+//   const homePage = await new HomePage();
 
-  homePage.save();
-  res.redirect("/admin/edithomepage");
-};
+//   const [{ path, filename }] = req.files;
+//   homePage.topImages_1 = {
+//     url: path,
+//     filename: filename,
+//     text: req.body.text,
+//     link: req.body.link,
+//   };
+
+//   homePage.save();
+//   res.redirect("/admin/edithomepage");
+// };
 
 module.exports.editImg_1 = async (req, res) => {
-  const homePage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const { path, filename } = req.file;
-
+  const [{ path, filename }] = req.files;
   homePage.topImages_1 = {
     url: path,
     filename: filename,
@@ -104,9 +108,9 @@ module.exports.editImg_1 = async (req, res) => {
 };
 
 module.exports.editImg_2 = async (req, res) => {
-  const homePage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const { path, filename } = req.file;
+  const [{ path, filename }] = req.files;
 
   homePage.topImages_2 = {
     url: path,
@@ -129,9 +133,9 @@ module.exports.editImg_2 = async (req, res) => {
   res.redirect(`/admin/edithomepage_2`);
 };
 module.exports.editImg_3 = async (req, res) => {
-  const homePage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const { path, filename } = req.file;
+  const [{ path, filename }] = req.files;
 
   homePage.topImages_3 = {
     url: path,
@@ -155,9 +159,9 @@ module.exports.editImg_3 = async (req, res) => {
 };
 
 module.exports.editSecondImg_1 = async (req, res) => {
-  const homePage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const { path, filename } = req.file;
+  const [{ path, filename }] = req.files;
   homePage.secondImage_1 = {
     url: path,
     filename: filename,
@@ -179,9 +183,9 @@ module.exports.editSecondImg_1 = async (req, res) => {
 };
 
 module.exports.editSecondImg_2 = async (req, res) => {
-  const homePage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const { path, filename } = req.file;
+  const [{ path, filename }] = req.files;
   homePage.secondImage_2 = {
     url: path,
     filename: filename,

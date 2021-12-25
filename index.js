@@ -22,9 +22,8 @@ const LocalStrategy = require("passport-local");
 const { renderHomePage, renderCategoryPage } = require("./control/homepage");
 const helmet = require("helmet");
 const MongoStore = require("connect-mongo");
-const dbUrl = process.env.mongo_Url;
-//"mongodb://localhost:27017/petit-bae"
-//
+const dbUrl = process.env.mongo_Url || "mongodb://localhost:27017/petit-bae";
+
 mongoose
   .connect(dbUrl)
   .then(() => {

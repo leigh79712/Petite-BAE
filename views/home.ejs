@@ -160,10 +160,11 @@
   <h3 class="text-center my-5">New Arrival</h3>
   <div class="container mx-auto">
 <div class="row ">
-    <% for(let i = 0 ; i < 8 ; i ++) {%>
+
+    <% for(let i = (products.length - 8) ; i < products.length ; i ++) {%>
     <div class="mb-3 col">
       <div class="card" style="width: 18rem">
-        <% if(currentUser){%>
+        <% if(currentUser && !admin){%>
             <form class="form"
                 action="/user/<%= currentUser._id %>/shoppingcart/<%= products[i]._id %>"
                 method="post"
@@ -203,7 +204,7 @@
         
         <div class="card-body">
     <div class="mb-3">
-          <h6 class="card-title d-inline" ><%= products[i].products %></h6><span class="price"><%= products[i].price %> €</span>      
+          <h6 class="card-title d-inline" ><%= products[i].products %></h6><span class="price"><%= products[1].price %> €</span>      
     </div>
 
           

@@ -2,10 +2,11 @@ const HomePage = require("../models/homepage");
 const Product = require("../models/products");
 const Category = require("../models/category");
 const User = require("../models/user");
+
 module.exports.renderHomePage = async (req, res) => {
   const products = await Product.find({});
   const category = await Category.find({});
-  const homepage = await HomePage.findById("61c1ce04c1fab7aa8ad18ee5");
+  const homepage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
   const user = await User.findById(req.user).populate("shoppingCart");
   let sum = 0;
   if (user) {

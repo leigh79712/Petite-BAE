@@ -36,10 +36,6 @@ for (let cate of newCategory) {
   otherCate.push(cate.otherCategory);
 }
 
-console.log(otherS);
-console.log(otherC);
-console.log(otherCate);
-
 const renderNewItem = (input, container) => {
   const el = "_" + input.value.toUpperCase();
   console.log(el.slice(1));

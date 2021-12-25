@@ -16,13 +16,26 @@ router.get("/edithomepage_3", isLoggedIn, checkAdmins, admin.renderEditImg_3);
 router.get("/edithomepage_4", isLoggedIn, checkAdmins, admin.renderEditImg_4);
 router.get("/edithomepage_5", isLoggedIn, checkAdmins, admin.renderEditImg_5);
 
-// router.post("/edithomepage", isLoggedIn, checkAdmins,upload.array("topImages_1"), admin.postNewEditImg);
+// router
+//   .route("/edithomepage")
+//   .get(
+//     isLoggedIn,
+//     checkAdmins,
+//     upload.array("topImages_1"),
+//     admin.renderHomePage
+//   )
+//   .post(
+//     isLoggedIn,
+//     checkAdmins,
+//     upload.array("topImages_1"),
+//     admin.postNewEditImg
+//   );
 
 router.put(
   "/edithomepage_1",
   isLoggedIn,
   checkAdmins,
-  upload.single("topImages_1"),
+  upload.array("topImages_1"),
   admin.editImg_1
 );
 
@@ -30,7 +43,7 @@ router.put(
   "/edithomepage_2",
   isLoggedIn,
   checkAdmins,
-  upload.single("topImages_2"),
+  upload.array("topImages_2"),
   admin.editImg_2
 );
 
@@ -38,19 +51,21 @@ router.put(
   "/edithomepage_3",
   isLoggedIn,
   checkAdmins,
-  upload.single("topImages_3"),
+  upload.array("topImages_3"),
   admin.editImg_3
 );
 router.put(
   "/edithomepage_4",
   isLoggedIn,
   checkAdmins,
-  upload.single("secondImage_1")
+  upload.array("secondImage_1"),
+  admin.editSecondImg_1
 );
 router.put(
   "/edithomepage_5",
   isLoggedIn,
   checkAdmins,
-  upload.single("secondImage_1")
+  upload.array("secondImage_2"),
+  admin.editSecondImg_2
 );
 module.exports = router;
