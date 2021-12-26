@@ -21,6 +21,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const { renderHomePage, renderCategoryPage } = require("./control/homepage");
 const helmet = require("helmet");
+const { security } = require("./control/securityPolicy");
 const MongoStore = require("connect-mongo");
 const dbUrl = process.env.mongo_Url || "mongodb://localhost:27017/petit-bae";
 
