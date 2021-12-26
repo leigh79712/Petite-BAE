@@ -43,9 +43,16 @@
 </div>
 <hr />
 <div>
-  <form action="" method="post">
-    <h5>Shipped</h5>
-    <input type="checkbox" name="shipped" id="shipped" />
-    <label for="shipped"></label>
+  <form
+    action="/admin/order/<%= order.id %>?_method=PUT"
+    class="float-end mx-5"
+    method="post"
+  >
+    <input type="checkbox" name="shipped" id="shipped" required />
+    <input
+      class="btn btn-sm btn-outline-secondary"
+      type="submit"
+      value="Shipped"
+    />
   </form>
 </div>

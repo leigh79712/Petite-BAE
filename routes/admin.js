@@ -8,8 +8,10 @@ const { isLoggedIn, checkAdmins } = require("../middleware");
 
 router.get("/order", isLoggedIn, checkAdmins, admin.renderOrderPage);
 
-router.get("/order/:id", isLoggedIn, checkAdmins, admin.renderOrderDetailPage);
-
+router
+  .route("/order/:id")
+  .get(isLoggedIn, checkAdmins, admin.renderOrderDetailPage)
+  .put(isLoggedIn, checkAdmins, admin.shippedOrder);
 router.get("/edithomepage_1", isLoggedIn, checkAdmins, admin.renderEditImg_1);
 router.get("/edithomepage_2", isLoggedIn, checkAdmins, admin.renderEditImg_2);
 router.get("/edithomepage_3", isLoggedIn, checkAdmins, admin.renderEditImg_3);

@@ -16,6 +16,12 @@ module.exports.renderOrderDetailPage = async (req, res) => {
   const order = await Order.findById(id).populate("user");
   res.render("admin/detail", { category, order });
 };
+module.exports.shippedOrder = async (req, res) => {
+  const { id } = req.params;
+  const category = await Category.find({});
+  const order = await Order.findByIdAndUpdate(id, { shipping: true });
+  res.redirect("/admin/order");
+};
 
 module.exports.renderEditImg_1 = async (req, res) => {
   const category = await Category.find({});

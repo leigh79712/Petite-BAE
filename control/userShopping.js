@@ -19,6 +19,65 @@ module.exports.renderCheckOutPage = async (req, res) => {
   res.render("products/shoppingCart", { user, shoppingCart, category, sum });
 };
 
+module.exports.renderMypage = async (req, res) => {
+  const { _id } = req.params;
+  const category = await Category.find({});
+  const user = await User.findById(req.user)
+    .populate("shoppingCart")
+    .populate("order");
+
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price * p.qty;
+    }
+  }
+  res.render("user/userpage", {
+    sum,
+    user,
+    category,
+  });
+};
+module.exports.renderMyorder = async (req, res) => {
+  const { _id } = req.params;
+  const category = await Category.find({});
+  const user = await User.findById(req.user)
+    .populate("shoppingCart")
+    .populate("order");
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price * p.qty;
+    }
+  }
+  res.render("user/userOrder", {
+    sum,
+    user,
+    category,
+  });
+};
+
+module.exports.renderUserOrderDetail = async (req, res) => {
+  const { _id, orderID } = req.params;
+
+  const category = await Category.find({});
+  const user = await User.findById(req.user)
+    .populate("shoppingCart")
+    .populate("order");
+  let sum = 0;
+  if (user) {
+    for (let p of user.shoppingCart) {
+      sum += p.price * p.qty;
+    }
+  }
+  const order = await Order.findById(orderID).populate("user");
+  res.render("user/userOrderDetail", {
+    sum,
+    user,
+    category,
+    order,
+  });
+};
 module.exports.renderSuccessOrderPage = async (req, res) => {
   const { _id } = req.params;
   const user = await User.findById(req.user)

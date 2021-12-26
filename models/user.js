@@ -11,6 +11,7 @@ const UserSchema = new Schema({
   },
   firstname: String,
   lastname: String,
+  birthday: Date,
   shoppingCart: [
     {
       type: Schema.Types.ObjectId,

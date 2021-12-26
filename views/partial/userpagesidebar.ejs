@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="/css/sidebar.css" />
+
+<div class="col-md-2 sidenav">
+  <ul class="nav flex-column side-col">
+    <% if(!currentUser || currentUser && !admin){ %>
+    <div class="col">
+      <li class="nav-item">
+        <a class="nav-link" href="/user/<%= currentUser.id %>/mypage"
+          >Information</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/<%= currentUser.id %>/myorder"
+          >My Order</a
+        >
+      </li>
+    </div>
+    <% } %>
+  </ul>
+</div>

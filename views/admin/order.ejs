@@ -27,7 +27,7 @@
   <div class="card mb-3">
     <div class="row">
       <div class="col">
-        <h5 class="card-title"><%= o.date %></h5>
+        <h5 class="card-title"><%= String(o.date).slice(3,15) %></h5>
       </div>
       <div class="col">
         <a href="/admin/order/<%= o._id %>"><h5 class="card-title"><%= o._id %></h5></a>
@@ -39,7 +39,7 @@
         <h5 class="card-title"><%= o.user.email %></h5>
       </div>
       <div class="col-1">
-        <h5 class="card-title"><%= o.shipping %></h5>
+        <h5 class="card-title"><%= o.shipping == false ? "X" : "V" %></h5>
       </div>
     </div>
   </div>

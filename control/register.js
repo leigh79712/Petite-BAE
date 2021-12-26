@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Category = require("../models/category");
+const ShoppingCart = require("../models/shoppingcart");
 
 module.exports.renderSignupPage = async (req, res) => {
   const category = await Category.find({});

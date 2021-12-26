@@ -11,7 +11,12 @@ router
   .get(products.renderIndexPage)
   .post(upload.array("images"), validateProduct, products.makeNewProducts);
 
-router.get("/editCategory", products.renderEditCategory);
+router.get(
+  "/editCategory",
+  isLoggedIn,
+  checkAdmins,
+  products.renderEditCategory
+);
 router.post("/newCategory", isLoggedIn, checkAdmins, products.newCategory);
 router.get("/new", isLoggedIn, checkAdmins, products.renderNewProductPage);
 router.post("/color", isLoggedIn, checkAdmins, products.editColor);
