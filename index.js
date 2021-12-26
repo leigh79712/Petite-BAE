@@ -51,6 +51,9 @@ const secret = process.env.SESSION_SECRET || "thisshouldbeabettersecret!";
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret,
+  },
 });
 store.on("error", function (e) {
   console.log("SESSION STORE ERROR", e);
@@ -115,6 +118,7 @@ app.use(async (err, req, res, next) => {
   if (!err.message) err.message = "Oh No, Something went wrong";
   res.status(statusCode).render("error", { category, err });
 });
-app.listen(3000, () => {
-  console.log("listen to port 3000");
+const port = productsRoute.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`listen to port ${port}`);
 });
