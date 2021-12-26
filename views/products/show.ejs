@@ -88,7 +88,14 @@
               type="button"
               value="+"
             />
-            <input name="qty" id="count" type="text" value="1" size="1" />
+            <input
+              name="qty"
+              class=""
+              id="count"
+              type="text"
+              value="1"
+              size="1"
+            />
             <input
               id="dec"
               class="btn btn-outline-secondary"
@@ -97,10 +104,20 @@
             />
           </div>
           <input
-            class="btn btn-outline-secondary float-end"
+            class="btn btn-outline-secondary float-end d-none d-md-block"
             type="submit"
             value="Add to cart"
           />
+          <div
+            class="d-sm-block sticky-bottom fixed-bottom d-md-none d-grid gap-2"
+          >
+            <input
+              class="btn btn-secondary btn-submit"
+              type="submit"
+              value="Add to cart"
+            />
+          </div>
+
           <h4><%= products.price %> €</h4>
         </div>
       </form>

@@ -1,6 +1,7 @@
 const Category = require("../models/category");
 const Color = require("../models/color");
 const Product = require("../models/products");
+const HomePage = require("../models/homepage");
 const User = require("../models/user");
 const Size = require("../models/size");
 const catchAsync = require("../utils/catchAsync");
@@ -42,6 +43,7 @@ module.exports.renderIndexPage = async (req, res, next) => {
   const products = await Product.find({});
   const category = await Category.find({});
   const user = await User.findById(req.user).populate("shoppingCart");
+
   let sum = 0;
   if (user) {
     for (let p of user.shoppingCart) {
@@ -50,16 +52,25 @@ module.exports.renderIndexPage = async (req, res, next) => {
   }
   res.render("products/index", { user, products, category, sum });
 };
-
+const imageUrl = [
+  {
+    path: "https://res.cloudinary.com/leigh79712/image/upload/v1640352242/ShoppingApp/jrzsq5frvufd9nzw4lfz.webp",
+    filename: "ShoppingApp/jrzsq5frvufd9nzw4lfz",
+  },
+  {
+    path: "https://res.cloudinary.com/leigh79712/image/upload/v1640352242/ShoppingApp/lsjusb3rkbxqb0hot6en.webp",
+    filename: "ShoppingApp/lsjusb3rkbxqb0hot6en",
+  },
+];
 module.exports.makeNewProducts = async (req, res) => {
   // if (!req.body) throw new ExpressError("Invalid Product Data", 400);
   const product = await new Product(req.body);
-  product.images = req.files.map((f) => ({
+  product.images = imageUrl.map((f) => ({
     url: f.path,
     filename: f.filename,
   }));
   product.save();
-  console.log(product);
+
   req.flash("success", "Successfully upload a product!");
   res.redirect(`/products/${product._id}`);
 };
@@ -141,6 +152,7 @@ module.exports.editProducts = async (req, res) => {
     url: f.path,
     filename: f.filename,
   }));
+
   product.images.push(...imgs);
   await product.save();
   if (req.body.deleteImage) {

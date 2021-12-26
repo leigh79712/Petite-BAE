@@ -39,7 +39,7 @@
           <div class="carousel-item active">
             <a href="/<%= homepage.topImages_1.link %>"
               ><img
-                src="<%= homepage.topImages_1.url %>"
+                src="<%= homepage.topImages_1.image.url %>"
                 class="d-block w-100 h-100"
                 alt="<%= homepage.topImages_1.text %>"
             /></a>
@@ -54,7 +54,7 @@
           <div class="carousel-item">
             <a href="/<%= homepage.topImages_2.link %>"
               ><img
-                src="<%= homepage.topImages_2.url %>"
+                src="<%= homepage.topImages_2.image.url %>"
                 class="d-block w-100 h-100"
                 alt="<%= homepage.topImages_2.text %>"
             /></a>
@@ -69,7 +69,7 @@
           <div class="carousel-item">
             <a href="/<%= homepage.topImages_3.link %>"
               ><img
-                src="<%= homepage.topImages_3.url %>"
+                src="<%= homepage.topImages_3.image.url %>"
                 class="d-block w-100 h-100"
                 alt="<%= homepage.topImages_3.text %>"
             /></a>
@@ -107,7 +107,7 @@
           <div class="carousel-item active">
             <a href="/<%= homepage.secondImage_1.link %>"
               ><img
-                src="<%= homepage.secondImage_1.url %>"
+                src="<%= homepage.secondImage_1.image.url %>"
                 class="d-block w-100 h-80"
                 alt="<%= homepage.secondImage_1.text %>"
             /></a><div class="carousel-caption d-none d-md-block">
@@ -122,7 +122,7 @@
           <div class="carousel-item">
             <a href="/<%= homepage.secondImage_2.link %>"
               ><img
-                src="<%= homepage.secondImage_2.url %>"
+                src="<%= homepage.secondImage_2.image.url %>"
                 class="d-block w-100"
                 alt="<%= homepage.secondImage_2.text %>"
             /></a>
@@ -163,7 +163,7 @@
 
     <% for(let i = (products.length - 8) ; i < products.length ; i ++) {%>
     <div class="mb-3 col mx-auto">
-      <div class="card me-0" style="max-width: 18rem">
+      <div class="card me-0" style="width: 18rem">
         <% if(currentUser && !admin){%>
             <form class="form"
                 action="/user/<%= currentUser._id %>/shoppingcart/<%= products[i]._id %>"

@@ -90,13 +90,18 @@ module.exports.renderEditImg_5 = async (req, res) => {
 module.exports.editImg_1 = async (req, res) => {
   const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const [{ path, filename }] = req.files;
-  homePage.topImages_1 = {
-    url: path,
-    filename: filename,
-    text: req.body.text,
-    link: req.body.link,
-  };
+  homePage.topImages_1.text = req.body.text;
+  homePage.topImages_1.link = req.body.link;
+
+  if (req.files.length !== 0) {
+    const [i] = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+    homePage.topImages_1.image = i;
+  }
+
+  await homePage.save();
 
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
@@ -114,14 +119,16 @@ module.exports.editImg_1 = async (req, res) => {
 module.exports.editImg_2 = async (req, res) => {
   const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const [{ path, filename }] = req.files;
+  homePage.topImages_2.text = req.body.text;
+  homePage.topImages_2.link = req.body.link;
 
-  homePage.topImages_2 = {
-    url: path,
-    filename: filename,
-    text: req.body.text,
-    link: req.body.link,
-  };
+  if (req.files.length !== 0) {
+    const [i] = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+    homePage.topImages_2.image = i;
+  }
 
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
@@ -138,14 +145,16 @@ module.exports.editImg_2 = async (req, res) => {
 module.exports.editImg_3 = async (req, res) => {
   const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const [{ path, filename }] = req.files;
+  homePage.topImages_3.text = req.body.text;
+  homePage.topImages_3.link = req.body.link;
 
-  homePage.topImages_3 = {
-    url: path,
-    filename: filename,
-    text: req.body.text,
-    link: req.body.link,
-  };
+  if (req.files.length !== 0) {
+    const [i] = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+    homePage.topImages_3.image = i;
+  }
 
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
@@ -162,14 +171,17 @@ module.exports.editImg_3 = async (req, res) => {
 
 module.exports.editSecondImg_1 = async (req, res) => {
   const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
+  homePage.secondImage_1.text = req.body.text;
+  homePage.secondImage_1.link = req.body.link;
 
-  const [{ path, filename }] = req.files;
-  homePage.secondImage_1 = {
-    url: path,
-    filename: filename,
-    text: req.body.text,
-    link: req.body.link,
-  };
+  if (req.files.length !== 0) {
+    const [i] = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+    homePage.secondImage_1.image = i;
+  }
+
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
       await cloudinary.uploader.destroy(filename);
@@ -186,13 +198,17 @@ module.exports.editSecondImg_1 = async (req, res) => {
 module.exports.editSecondImg_2 = async (req, res) => {
   const homePage = await HomePage.findById("61c5bbd0eee02c6540fa018e");
 
-  const [{ path, filename }] = req.files;
-  homePage.secondImage_2 = {
-    url: path,
-    filename: filename,
-    text: req.body.text,
-    link: req.body.link,
-  };
+  homePage.secondImage_2.text = req.body.text;
+  homePage.secondImage_2.link = req.body.link;
+
+  if (req.files.length !== 0) {
+    const [i] = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+    homePage.secondImage_2.image = i;
+  }
+
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
       await cloudinary.uploader.destroy(filename);

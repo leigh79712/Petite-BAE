@@ -43,3 +43,7 @@
   right: 6%;
   transform: translate(0%, -400%);
 }
+
+.btn-submit {
+  height: 3.5em;
+}

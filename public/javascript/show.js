@@ -1,14 +1,12 @@
-window.onload = function () {
-  const count = document.getElementById("count");
-  const inc = document.getElementById("inc");
-  const dec = document.getElementById("dec");
-  inc.onclick = function () {
-    count.value = parseInt(count.value) + 1;
-  };
-  dec.onclick = function () {
-    if (count.value <= 0) return;
-    count.value = parseInt(count.value) - 1;
-  };
+const count = document.getElementById("count");
+const inc = document.getElementById("inc");
+const dec = document.getElementById("dec");
+inc.onclick = function () {
+  count.value = parseInt(count.value) + 1;
+};
+dec.onclick = function () {
+  if (count.value <= 0) return;
+  count.value = parseInt(count.value) - 1;
 };
 
 window.onload = function () {

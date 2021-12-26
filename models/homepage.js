@@ -2,13 +2,15 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ImageSchema = new Schema({
-  url: String,
-  filename: String,
   text: String,
   link: String,
+  image: {
+    url: String,
+    filename: String,
+  },
 });
 ImageSchema.virtual("thumbnail").get(function () {
-  return this.url.replace("/upload", "/upload/w_500");
+  return this.image.url.replace("/upload", "/upload/w_500");
 });
 
 const HomePageSchema = new Schema({
