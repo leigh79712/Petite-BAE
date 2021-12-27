@@ -160,8 +160,8 @@
 <div class="row ">
 
     <% for(let i = (products.length - 8) ; i < products.length ; i ++) {%>
-    <div class="mb-3 col">
-      <div class="card ms-4 ms-md-0" style="width: 18rem">
+    <div class="mb-3 ms-5 ms-md-0 mt-2 mt-md-0 col">
+      <div class="card" style="width: 18rem">
         <% if(currentUser && !admin){%>
             <form class="form"
                 action="/user/<%= currentUser._id %>/shoppingcart/<%= products[i]._id %>"
