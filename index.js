@@ -55,6 +55,7 @@ const store = MongoStore.create({
     secret,
   },
 });
+
 store.on("error", function (e) {
   console.log("SESSION STORE ERROR", e);
 });

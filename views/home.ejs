@@ -160,8 +160,8 @@
 <div class="row ">
 
     <% for(let i = (products.length - 8) ; i < products.length ; i ++) {%>
-    <div class="mb-3 col mx-auto">
-      <div class="card me-0" style="width: 18rem">
+    <div class="mb-3 col">
+      <div class="card ms-4" style="width: 18rem">
         <% if(currentUser && !admin){%>
             <form class="form"
                 action="/user/<%= currentUser._id %>/shoppingcart/<%= products[i]._id %>"
@@ -245,14 +245,17 @@
 
 <div class="subscribe mb-5" >
     <div class="email mx-auto">
-      <h3 class="text-center">Stay connected by subscribing to our Newsletter</h3>
-      <p class="text-center">Every month we release a new collection, don't miss it!</p>
+      <h3 class="text-center">Contact Us</h3>
+      <p class="text-center">Do you have something in mind? Just let us know!</p>
           <div class="row">
             <div class="col-10">
               <input type="email" class="form-control"  placeholder="E-mail">
             </div>
             <div class="col-2">
-              <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#subscribeModal">Subscribe</button>
+              <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#subscribeModal">Send</button>
+            </div>
+            <div class="col">
+              <textarea class="form-control" name="" id="" cols="10" rows="5"></textarea>
             </div>
           </div>
     </div>
