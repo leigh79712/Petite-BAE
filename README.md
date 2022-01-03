@@ -5,12 +5,15 @@ This is the basic shopping app. You could sign in, sign out as user. You could a
 
 ## Installation
 
-```bash yarn
+```
+bash yarn
 or
 npm i
 ```
 
 ## Development
 
-```node index.js
+```
+node index.js
 
+```
